@@ -17,6 +17,15 @@ use Yii;
  */
 class Sentence extends \yii\db\ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return
+        [
+
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

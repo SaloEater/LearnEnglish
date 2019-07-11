@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\MD5Behavior;
 
 /**
  * This is the model class for table "text".
@@ -21,6 +22,18 @@ use Yii;
  */
 class Text extends \yii\db\ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return
+        [
+            [
+                'class' => MD5Behavior::class,
+                //'attribute' => 'text'
+            ]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

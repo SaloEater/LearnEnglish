@@ -18,7 +18,7 @@ class m190711_124606_create_word_table extends Migration
         $this->createTable('{{%word}}', [
             'id' => $this->primaryKey(),
             'content' => $this->string(64)->append('CHARACTER SET utf8 COLLATE utf8_general_ci'),
-            'count' => $this->integer(),
+            'count' => $this->integer()->defaultValue(0),
         ], 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB');
     }
 
