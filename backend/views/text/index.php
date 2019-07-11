@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\TextSearch */
+/* @var $searchModel backend\models\TextSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Texts';
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'text:ntext',
+            'content:ntext',
             'md5',
             'created_at',
             'updated_at',

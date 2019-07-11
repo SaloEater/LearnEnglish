@@ -18,7 +18,7 @@ class WordSearch extends Word
     {
         return [
             [['id', 'count', 'sentence_id'], 'integer'],
-            [['value'], 'safe'],
+            [['content'], 'safe'],
         ];
     }
 
@@ -63,7 +63,7 @@ class WordSearch extends Word
             'sentence_id' => $this->sentence_id,
         ]);
 
-        $query->andFilterWhere(['like', 'value', $this->value]);
+        $query->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

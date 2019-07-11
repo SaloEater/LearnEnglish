@@ -18,7 +18,7 @@ class SentenceSearch extends Sentence
     {
         return [
             [['id', 'text_id'], 'integer'],
-            [['text'], 'safe'],
+            [['content'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class SentenceSearch extends Sentence
             'text_id' => $this->text_id,
         ]);
 
-        $query->andFilterWhere(['like', 'text', $this->text]);
+        $query->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

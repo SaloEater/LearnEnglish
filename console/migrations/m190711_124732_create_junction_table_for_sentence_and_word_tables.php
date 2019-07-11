@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%sentence_word}}`.
+ * Handles the creation of table `{{%sentences_words}}`.
  * Has foreign keys to the tables:
  *
  * - `{{%sentence}}`
@@ -16,7 +16,7 @@ class m190711_124732_create_junction_table_for_sentence_and_word_tables extends 
      */
     public function safeUp()
     {
-        $this->createTable('{{%sentence_word}}', [
+        $this->createTable('{{%sentences_words}}', [
             'sentence_id' => $this->integer(),
             'word_id' => $this->integer(),
             'PRIMARY KEY(sentence_id, word_id)',
@@ -25,14 +25,14 @@ class m190711_124732_create_junction_table_for_sentence_and_word_tables extends 
         // creates index for column `sentence_id`
         $this->createIndex(
             '{{%idx-sentence_word-sentence_id}}',
-            '{{%sentence_word}}',
+            '{{%sentences_words}}',
             'sentence_id'
         );
 
         // add foreign key for table `{{%sentence}}`
         $this->addForeignKey(
             '{{%fk-sentence_word-sentence_id}}',
-            '{{%sentence_word}}',
+            '{{%sentences_words}}',
             'sentence_id',
             '{{%sentence}}',
             'id',
@@ -42,14 +42,14 @@ class m190711_124732_create_junction_table_for_sentence_and_word_tables extends 
         // creates index for column `word_id`
         $this->createIndex(
             '{{%idx-sentence_word-word_id}}',
-            '{{%sentence_word}}',
+            '{{%sentences_words}}',
             'word_id'
         );
 
         // add foreign key for table `{{%word}}`
         $this->addForeignKey(
             '{{%fk-sentence_word-word_id}}',
-            '{{%sentence_word}}',
+            '{{%sentences_words}}',
             'word_id',
             '{{%word}}',
             'id',
@@ -65,27 +65,27 @@ class m190711_124732_create_junction_table_for_sentence_and_word_tables extends 
         // drops foreign key for table `{{%sentence}}`
         $this->dropForeignKey(
             '{{%fk-sentence_word-sentence_id}}',
-            '{{%sentence_word}}'
+            '{{%sentences_words}}'
         );
 
         // drops index for column `sentence_id`
         $this->dropIndex(
             '{{%idx-sentence_word-sentence_id}}',
-            '{{%sentence_word}}'
+            '{{%sentences_words}}'
         );
 
         // drops foreign key for table `{{%word}}`
         $this->dropForeignKey(
             '{{%fk-sentence_word-word_id}}',
-            '{{%sentence_word}}'
+            '{{%sentences_words}}'
         );
 
         // drops index for column `word_id`
         $this->dropIndex(
             '{{%idx-sentence_word-word_id}}',
-            '{{%sentence_word}}'
+            '{{%sentences_words}}'
         );
 
-        $this->dropTable('{{%sentence_word}}');
+        $this->dropTable('{{%sentences_words}}');
     }
 }

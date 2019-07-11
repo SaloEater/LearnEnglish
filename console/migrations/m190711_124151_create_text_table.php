@@ -21,7 +21,7 @@ class m190711_124151_create_text_table extends Migration
     {
         $this->createTable('{{%text}}', [
             'id' => $this->primaryKey(),
-            'text' => $this->mediumText()->append('CHARACTER SET utf8 COLLATE utf8_general_ci'),
+            'content' => $this->mediumText()->append('CHARACTER SET utf8 COLLATE utf8_general_ci'),
             'md5' => $this->char(32),
             'created_at' => $this->integer(11),
             'updated_at' => $this->integer(11),

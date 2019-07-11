@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\TextSearch */
+/* @var $model backend\models\TextSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'text') ?>
+    <?= $form->field($model, 'content') ?>
 
     <?= $form->field($model, 'md5') ?>
 

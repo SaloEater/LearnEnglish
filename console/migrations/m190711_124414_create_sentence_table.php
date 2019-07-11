@@ -17,7 +17,7 @@ class m190711_124414_create_sentence_table extends Migration
     {
         $this->createTable('{{%sentence}}', [
             'id' => $this->primaryKey(),
-            'text' => $this->text()->append('CHARACTER SET utf8 COLLATE utf8_general_ci'),
+            'content' => $this->text()->append('CHARACTER SET utf8 COLLATE utf8_general_ci'),
             'text_id' => $this->integer(),
         ], 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB');
 

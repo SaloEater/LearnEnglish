@@ -3,6 +3,9 @@
 /yii_test
 /yii_test.bat
 
+#My test files
+/TestField
+
 # phpstorm project files
 .idea
 

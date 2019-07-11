@@ -8,13 +8,11 @@ use Yii;
  * This is the model class for table "word".
  *
  * @property int $id
- * @property string $value
+ * @property string $content
  * @property int $count
- * @property int $sentence_id
  *
- * @property SentenceWord[] $sentenceWords
+ * @property SentencesWords[] $sentencesWords
  * @property Sentence[] $sentences
- * @property Sentence $sentence
  */
 class Word extends \yii\db\ActiveRecord
 {
@@ -32,9 +30,8 @@ class Word extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['count', 'sentence_id'], 'integer'],
-            [['value'], 'string', 'max' => 64],
-            [['sentence_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sentence::className(), 'targetAttribute' => ['sentence_id' => 'id']],
+            [['count'], 'integer'],
+            [['content'], 'string', 'max' => 64],
         ];
     }
 
@@ -45,18 +42,17 @@ class Word extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'value' => 'Value',
+            'content' => 'Content',
             'count' => 'Count',
-            'sentence_id' => 'Sentence ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSentenceWords()
+    public function getSentencesWords()
     {
-        return $this->hasMany(SentenceWord::className(), ['word_id' => 'id']);
+        return $this->hasMany(SentencesWords::className(), ['word_id' => 'id']);
     }
 
     /**
@@ -64,14 +60,6 @@ class Word extends \yii\db\ActiveRecord
      */
     public function getSentences()
     {
-        return $this->hasMany(Sentence::className(), ['id' => 'sentence_id'])->viaTable('sentence_word', ['word_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSentence()
-    {
-        return $this->hasOne(Sentence::className(), ['id' => 'sentence_id']);
+        return $this->hasMany(Sentence::className(), ['id' => 'sentence_id'])->viaTable('sentences_words', ['word_id' => 'id']);
     }
 }

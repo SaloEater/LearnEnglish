@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "text".
  *
  * @property int $id
- * @property string $text
+ * @property string $content
  * @property string $md5
  * @property int $created_at
  * @property int $updated_at
@@ -35,7 +35,7 @@ class Text extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['text'], 'string'],
+            [['content'], 'string'],
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['md5'], 'string', 'max' => 32],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -50,7 +50,7 @@ class Text extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'text' => 'Text',
+            'content' => 'Content',
             'md5' => 'Md5',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
