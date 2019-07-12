@@ -5,14 +5,16 @@
  * Date: 11.07.2019
  * Time: 23:15
  */
-namespace yii\behaviors;
+namespace common\behaviours;
 
 use Yii;
+use yii\base\Behavior;
 use yii\base\InvalidConfigException;
 use yii\db\BaseActiveRecord;
 use yii\helpers\ArrayHelper;
+use \yii\behaviors\AttributeBehavior;
 
-class MD5Behavior
+class MD5Behavior extends AttributeBehavior
 {
     /**
      * @var string the attribute that will receive md5 value
@@ -22,7 +24,7 @@ class MD5Behavior
     /**
      * @var string|array|null the attribute whose value will be converted into a md5
      */
-    public $attribute = 'text';
+    public $attribute;
     /**
      * {@inheritdoc}
      *

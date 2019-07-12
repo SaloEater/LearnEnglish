@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\MD5Behavior;
+use common\behaviours\MD5Behavior;
 
 /**
  * This is the model class for table "text".
@@ -27,10 +27,10 @@ class Text extends \yii\db\ActiveRecord
     {
         return
         [
-            /*[
+            [
                 'class' => MD5Behavior::class,
-                //'attribute' => 'text'
-            ]*/
+                'attribute' => 'text'
+            ]
         ];
     }
 
