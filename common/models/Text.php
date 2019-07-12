@@ -27,10 +27,10 @@ class Text extends \yii\db\ActiveRecord
     {
         return
         [
-            [
+            /*[
                 'class' => MD5Behavior::class,
                 //'attribute' => 'text'
-            ]
+            ]*/
         ];
     }
 
