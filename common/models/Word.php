@@ -11,6 +11,7 @@ use Yii;
  * @property string $content
  * @property int $count
  *
+ * @property Forms[] $forms
  * @property SentencesWords[] $sentencesWords
  * @property Sentence[] $sentences
  */
@@ -45,6 +46,14 @@ class Word extends \yii\db\ActiveRecord
             'content' => 'Content',
             'count' => 'Count',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getForms()
+    {
+        return $this->hasMany(Forms::className(), ['word_id' => 'id']);
     }
 
     /**
