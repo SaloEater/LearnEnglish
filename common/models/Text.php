@@ -29,7 +29,7 @@ class Text extends \yii\db\ActiveRecord
         [
             [
                 'class' => MD5Behavior::class,
-                'attribute' => 'text'
+                'attribute' => 'content'
             ]
         ];
     }
