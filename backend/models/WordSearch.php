@@ -17,7 +17,7 @@ class WordSearch extends Word
     public function rules()
     {
         return [
-            [['id', 'count', 'sentence_id'], 'integer'],
+            [['id', 'count'], 'integer'],
             [['content'], 'safe'],
         ];
     }
@@ -60,7 +60,6 @@ class WordSearch extends Word
         $query->andFilterWhere([
             'id' => $this->id,
             'count' => $this->count,
-            'sentence_id' => $this->sentence_id,
         ]);
 
         $query->andFilterWhere(['like', 'content', $this->content]);

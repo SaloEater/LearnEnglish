@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Text;
+use common\services\text\TextParser;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -255,6 +257,20 @@ class SiteController extends Controller
 
         return $this->render('resendVerificationEmail', [
             'model' => $model
+        ]);
+    }
+
+    public function actionAddText()
+    {
+        $textModel = new Text();
+
+        if ($textModel->load(Yii::$app->request->post()) && $textModel->save()) {
+            (new TextParser())->parseTextFromModel($textModel);
+            return $this->redirect(['view', 'id' => $textModel->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $textModel,
         ]);
     }
 }
