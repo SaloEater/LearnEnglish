@@ -42,11 +42,12 @@ class WordService
         return $form;
     }
 
-    /**
-     * @param Form $form
-     */
-    public function save(Word $word)
+
+    public function save(Word $word, $increment = true)
     {
+        if ($increment) {
+            $word->count++;
+        }
         if (!$word->save()) {
             throw new \RuntimeException('Form saving error');
         }

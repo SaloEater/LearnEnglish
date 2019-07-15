@@ -65,7 +65,6 @@ class TextParser
     {
         if (($dict = $this->wordAPI->IsForm($form_content))) {
             $form = $this->formService->getByContent($form_content);
-            $form->count++;
             $this->formService->save($form);
             foreach ($dict as $wordContent=>$common) {
                 $this->log .= "Word: $wordContent</br>";

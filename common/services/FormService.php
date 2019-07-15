@@ -42,8 +42,11 @@ class FormService
         return $form;
     }
 
-    public function save(Form $form)
+    public function save(Form $form, $increment = true)
     {
+        if ($increment) {
+            $form->count++;
+        }
         if (!$form->save()) {
             throw new \RuntimeException('Form saving error');
         }
