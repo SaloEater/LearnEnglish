@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Sentence;
 use common\models\SentencesWords;
 use common\models\Word;
+use common\service\text\TextParser;
 use Yii;
 use common\models\Text;
 use backend\models\TextSearch;
@@ -71,34 +72,7 @@ class TextController extends Controller
         $textModel = new Text();
 
         if ($textModel->load(Yii::$app->request->post()) && $textModel->save()) {
-            /**
-             * @var string[] $sentences
-             */
-            preg_match_all('([A-Z]{1}[\w\d\s\-\,\;]+[\.\!]{1})', $textModel->content, $sentences);
-
-            foreach ($sentences[0] as $_s) {
-                $model = new Sentence();
-                $model->content = $_s;
-                $model->text_id=$textModel->id;
-                //$model->refresh();
-                $model->save();
-                preg_match_all('(\w+)', $_s, $words);
-                foreach ($words[0] as $_w) {
-                    $word = Word::findOne(['content'=>$_w]);
-                    if (!$word) {
-                        $word = new Word();
-                        $word->content = $_w;
-                    }
-                    $word->count++;
-                    $word->save();
-
-                    $sentence_word = new SentencesWords();
-
-                    $sentence_word->sentence_id = $model->id;
-                    $sentence_word->word_id = $word->id;
-                    $sentence_word->save();
-                }
-            }
+            (new TextParser())->parseTextFromModel($textModel);
             return $this->redirect(['view', 'id' => $textModel->id]);
         }
 
