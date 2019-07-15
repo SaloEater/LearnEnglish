@@ -1,13 +1,13 @@
 <?php
 
-namespace common\service\text;
+namespace common\services\text;
 
 use common\models\Sentence;
 use common\models\SentencesWords;
 use common\models\Word;
 use common\models\Text;
 use common\models\Form;
-use common\service\word\WordAPI;
+use common\services\word\WordAPI;
 
 class TextParser
 {
@@ -58,7 +58,9 @@ class TextParser
 
     public function parseWord(string $word_content, int $sentence_id)
     {
-        $wordForm = null;
+
+
+        /*$wordForm = null;
         $word = null;
         if (($lemma = $this->wordAPI->IsForm($word_content))) {
             $wordForm = Form::findOne(['content' => $word_content]);
@@ -86,7 +88,7 @@ class TextParser
             $wordForm->word_id = $word->id;
             $wordForm->save();
         }
-        $this->createLinkBetweenWordAndSentence($word->id, $sentence_id);
+        $this->createLinkBetweenWordAndSentence($word->id, $sentence_id);*/
     }
 
     private function createLinkBetweenWordAndSentence(int $word_id, int $sentence_id)
