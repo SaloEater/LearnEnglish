@@ -9,9 +9,10 @@ use Yii;
  *
  * @property int $id
  * @property string $content
- * @property int $word_id
+ * @property int $count
  *
- * @property Word $word
+ * @property FormsWords[] $formsWords
+ * @property Word[] $words
  */
 class Form extends \yii\db\ActiveRecord
 {
@@ -29,9 +30,8 @@ class Form extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['word_id'], 'integer'],
+            [['count'], 'integer'],
             [['content'], 'string', 'max' => 64],
-            [['word_id'], 'exist', 'skipOnError' => true, 'targetClass' => Word::className(), 'targetAttribute' => ['word_id' => 'id']],
         ];
     }
 
@@ -43,15 +43,23 @@ class Form extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'content' => 'Content',
-            'word_id' => 'Word ID',
+            'count' => 'Count',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWord()
+    public function getFormsWords()
     {
-        return $this->hasOne(Word::className(), ['id' => 'word_id']);
+        return $this->hasMany(FormsWords::className(), ['form_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWords()
+    {
+        return $this->hasMany(Word::className(), ['id' => 'word_id'])->viaTable('forms_words', ['form_id' => 'id']);
     }
 }

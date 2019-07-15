@@ -2,10 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\Sentence;
-use common\models\SentencesWords;
-use common\models\Word;
-use common\services\text\TextParser;
+use common\services\TextParser;
 use Yii;
 use common\models\Text;
 use backend\models\TextSearch;

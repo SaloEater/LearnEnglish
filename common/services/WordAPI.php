@@ -1,6 +1,6 @@
 <?php
 
-namespace common\services\word;
+namespace common\services;
 
 use yii\httpclient\Client;
 

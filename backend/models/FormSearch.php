@@ -17,7 +17,7 @@ class FormSearch extends Form
     public function rules()
     {
         return [
-            [['id', 'word_id'], 'integer'],
+            [['id', 'count'], 'integer'],
             [['content'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ class FormSearch extends Form
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'word_id' => $this->word_id,
+            'count' => $this->count,
         ]);
 
         $query->andFilterWhere(['like', 'content', $this->content]);

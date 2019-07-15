@@ -6,9 +6,6 @@ use yii\db\ActiveRecord;
 
 class IRepository
 {
-    /**
-     * @var ActiveRecord $type
-     */
     protected $type;
 
     protected function getBy(array $condition): ActiveRecord
@@ -19,7 +16,7 @@ class IRepository
     protected function found($object)
     {
         if (!$object) {
-            throw new \DomainException(($this->type->className())." is not found");
+            throw new \DomainException(($this->type)." is not found");
         }
         return $object;
     }
