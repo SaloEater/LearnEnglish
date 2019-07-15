@@ -13,6 +13,7 @@ class TextParser
     private $wordService;
     private $formswordsService;
     private $sentenceswordsService;
+    private $sentenceService;
 
     private $log;
 
@@ -24,6 +25,7 @@ class TextParser
         $this->wordService = new WordService();
         $this->formswordsService = new FormsWordsService();
         $this->sentenceswordsService = new SentencesWordsService();
+        $this->sentenceService = new SentenceService();
     }
 
     public function parseTextFromModel(Text $model)
@@ -47,17 +49,17 @@ class TextParser
 
     public function parseSentence(string $sentence_content, int $text_id)
     {
-        $model = new Sentence();
-        $model->content = $sentence_content;
-        $model->text_id=$text_id;
-        $model->save();
+        $sentence = new Sentence();
+        $sentence->content = $sentence_content;
+        $sentence->text_id=$text_id;
+        $this->sentenceService->save($sentence);
         /**
          * @var string[] $words
          */
         preg_match_all('(\w+)', $sentence_content, $words);
         foreach ($words[0] as $form_content) {
             $this->log .= "Form: $form_content</br>";
-            $this->parseWord($form_content, $model->id);
+            $this->parseWord($form_content, $sentence->id);
         }
     }
 
