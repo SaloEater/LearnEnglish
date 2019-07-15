@@ -31,7 +31,7 @@ class WordAPI
         if ($response->isOk) {
             $data = $response->data;
             $lemma = $data['response'][1]['lemma'];
-            return $lemma;
+            return $lemma==$word ? false : $lemma;
         } else return false;
     }
 }
