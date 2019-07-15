@@ -34,8 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'md5',
             'created_at',
             'updated_at',
-            'created_by',
-            'updated_by',
+            [
+                'label' => 'created_by',
+                'value' => $model->createdBy->username
+            ],
+            [
+                'label' => 'updated_by',
+                'value' => $model->updatedBy->username
+            ],
         ],
     ]) ?>
 

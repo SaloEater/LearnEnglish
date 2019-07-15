@@ -4,6 +4,8 @@ namespace common\models;
 
 use Yii;
 use common\behaviours\MD5Behavior;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "text".
@@ -30,7 +32,9 @@ class Text extends \yii\db\ActiveRecord
             [
                 'class' => MD5Behavior::class,
                 'attribute' => 'content'
-            ]
+            ],
+            TimestampBehavior::class,
+            BlameableBehavior::class
         ];
     }
 

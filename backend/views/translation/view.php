@@ -33,7 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'content',
             'type',
             'sort',
-            'word_id',
+            [
+                'label' => 'word_id',
+                'value' => $model->word->content
+            ]
         ],
     ]) ?>
 
