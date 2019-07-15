@@ -2,7 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\Text;
-use common\services\text\TextParser;
+use common\services\TextParser;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -39,6 +39,11 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['addtext'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -260,16 +265,16 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionAddText()
+    public function actionAddtext()
     {
         $textModel = new Text();
 
         if ($textModel->load(Yii::$app->request->post()) && $textModel->save()) {
             (new TextParser())->parseTextFromModel($textModel);
-            return $this->redirect(['view', 'id' => $textModel->id]);
+            return $this->render('textView', ['model' => $textModel]);
         }
 
-        return $this->render('create', [
+        return $this->render('textCreate', [
             'model' => $textModel,
         ]);
     }
