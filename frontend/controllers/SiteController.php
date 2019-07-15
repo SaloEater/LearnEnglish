@@ -36,6 +36,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['signup', 'login'],
                         'allow' => true,
+                        'roles' => ['@'],
                     ],
                     [
                         'actions' => ['logout', 'profile'],
@@ -90,14 +91,14 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        $form = new LoginForm();
+        if ($form->load(Yii::$app->request->post()) && $form->login()) {
             return $this->goBack();
         } else {
-            $model->password = '';
+            $form->password = '';
 
             return $this->render('login', [
-                'model' => $model,
+                'model' => $form,
             ]);
         }
     }
@@ -121,9 +122,9 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $form = new ContactForm();
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            if ($form->sendEmail(Yii::$app->params['adminEmail'])) {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
@@ -132,7 +133,7 @@ class SiteController extends Controller
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                'model' => $form,
+                'model' => $model,
             ]);
         }
     }
@@ -155,7 +156,7 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $form = new SignupForm();
-        if ($form->load(Yii::$app->request->post()) && $form->signup()) {
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }
@@ -257,6 +258,20 @@ class SiteController extends Controller
 
         return $this->render('resendVerificationEmail', [
             'model' => $form
+        ]);
+    }
+
+    public function actionAddtext()
+    {
+        $text = new Text();
+
+        if ($text->load(Yii::$app->request->post()) && $text->save()) {
+            (new TextParser())->parseTextFromModel($text);
+            return $this->render('textView', ['model' => $text]);
+        }
+
+        return $this->render('textCreate', [
+            'model' => $text,
         ]);
     }
 
