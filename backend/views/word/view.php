@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'content',
             'count',
-            'sentence_id',
         ],
     ]) ?>
 
