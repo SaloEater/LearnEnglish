@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\httpclient\Client;
 
 /**
  * This is the model class for table "word".
@@ -12,9 +11,10 @@ use yii\httpclient\Client;
  * @property string $content
  * @property int $count
  *
- * @property Forms[] $forms
+ * @property Form[] $forms
  * @property SentencesWords[] $sentencesWords
  * @property Sentence[] $sentences
+ * @property Translation[] $translations
  */
 class Word extends \yii\db\ActiveRecord
 {
@@ -54,7 +54,7 @@ class Word extends \yii\db\ActiveRecord
      */
     public function getForms()
     {
-        return $this->hasMany(Forms::className(), ['word_id' => 'id']);
+        return $this->hasMany(Form::className(), ['word_id' => 'id']);
     }
 
     /**
@@ -73,4 +73,11 @@ class Word extends \yii\db\ActiveRecord
         return $this->hasMany(Sentence::className(), ['id' => 'sentence_id'])->viaTable('sentences_words', ['word_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTranslations()
+    {
+        return $this->hasMany(Translation::className(), ['word_id' => 'id']);
+    }
 }
