@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Forms */
+/* @var $model common\models\Form */
 
-$this->title = 'Create Forms';
+$this->title = 'Create Form';
 $this->params['breadcrumbs'][] = ['label' => 'Forms', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="forms-create">
+<div class="form-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

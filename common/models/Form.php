@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "forms".
+ * This is the model class for table "form".
  *
  * @property int $id
  * @property string $content
@@ -13,14 +13,14 @@ use Yii;
  *
  * @property Word $word
  */
-class Forms extends \yii\db\ActiveRecord
+class Form extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'forms';
+        return 'form';
     }
 
     /**

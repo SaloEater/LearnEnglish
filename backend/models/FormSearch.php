@@ -4,12 +4,12 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Forms;
+use common\models\Form;
 
 /**
- * FormsSearch represents the model behind the search form of `common\models\Forms`.
+ * FormSearch represents the model behind the search form of `common\models\Form`.
  */
-class FormsSearch extends Forms
+class FormSearch extends Form
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class FormsSearch extends Forms
      */
     public function search($params)
     {
-        $query = Forms::find();
+        $query = Form::find();
 
         // add conditions that should always apply here
 

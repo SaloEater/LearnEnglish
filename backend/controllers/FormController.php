@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Forms;
-use backend\models\FormsSearch;
+use common\models\Form;
+use backend\models\FormSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FormsController implements the CRUD actions for Forms model.
+ * FormController implements the CRUD actions for Form model.
  */
-class FormsController extends Controller
+class FormController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class FormsController extends Controller
     }
 
     /**
-     * Lists all Forms models.
+     * Lists all Form models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new FormsSearch();
+        $searchModel = new FormSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class FormsController extends Controller
     }
 
     /**
-     * Displays a single Forms model.
+     * Displays a single Form model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class FormsController extends Controller
     }
 
     /**
-     * Creates a new Forms model.
+     * Creates a new Form model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Forms();
+        $model = new Form();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class FormsController extends Controller
     }
 
     /**
-     * Updates an existing Forms model.
+     * Updates an existing Form model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class FormsController extends Controller
     }
 
     /**
-     * Deletes an existing Forms model.
+     * Deletes an existing Form model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class FormsController extends Controller
     }
 
     /**
-     * Finds the Forms model based on its primary key value.
+     * Finds the Form model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Forms the loaded model
+     * @return Form the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Forms::findOne($id)) !== null) {
+        if (($model = Form::findOne($id)) !== null) {
             return $model;
         }
 

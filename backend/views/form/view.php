@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Forms */
+/* @var $model common\models\Form */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Forms', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="forms-view">
+<div class="form-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
