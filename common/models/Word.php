@@ -10,11 +10,15 @@ use Yii;
  * @property int $id
  * @property string $content
  * @property int $count
+ * @property int $order
  *
+ * @property FormsWords[] $formsWords
  * @property Form[] $forms
  * @property SentencesWords[] $sentencesWords
  * @property Sentence[] $sentences
  * @property Translation[] $translations
+ * @property UsersWords[] $usersWords
+ * @property User[] $users
  */
 class Word extends \yii\db\ActiveRecord
 {
@@ -32,7 +36,7 @@ class Word extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['count'], 'integer'],
+            [['count', 'order'], 'integer'],
             [['content'], 'string', 'max' => 64],
         ];
     }
@@ -46,7 +50,16 @@ class Word extends \yii\db\ActiveRecord
             'id' => 'ID',
             'content' => 'Content',
             'count' => 'Count',
+            'order' => 'Order',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFormsWords()
+    {
+        return $this->hasMany(FormsWords::className(), ['word_id' => 'id']);
     }
 
     /**
@@ -54,7 +67,7 @@ class Word extends \yii\db\ActiveRecord
      */
     public function getForms()
     {
-        return $this->hasMany(Form::className(), ['word_id' => 'id']);
+        return $this->hasMany(Form::className(), ['id' => 'form_id'])->viaTable('forms_words', ['word_id' => 'id']);
     }
 
     /**
@@ -79,5 +92,21 @@ class Word extends \yii\db\ActiveRecord
     public function getTranslations()
     {
         return $this->hasMany(Translation::className(), ['word_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsersWords()
+    {
+        return $this->hasMany(UsersWords::className(), ['word_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('users_words', ['word_id' => 'id']);
     }
 }
