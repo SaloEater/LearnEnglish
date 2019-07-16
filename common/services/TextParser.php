@@ -73,16 +73,16 @@ class TextParser
                 $word = $this->wordService->getByContent($wordContent);
                 $this->formswordsService->EstablishLinkBetween($form->id, $word->id);
                 $this->sentenceswordsService->EstablishLinkBetween($sentence_id, $word->id);
+
+
+
                 foreach ($common as $sort => $description) {
                     $this->log .= "Sort: $sort</br>";
                     $content = $description['tr'];
                     $this->log .= "Content: $content</br>";
                     $type = $description['type'];
                     $this->log .= "Type: $type</br>";
-                    $translation = $this->translationService->getByContentAndType($content, $type);
-                    $translation->word_id = $word->id;
-                    $translation->sort = $sort;
-                    $this->translationService->save($translation);
+                    $this->translationService->ensureExists($content, $type, $word->id, $sort);
                 }
             }
         } else {
