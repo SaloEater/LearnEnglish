@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\Text;
+use common\models\User;
 use common\services\TextParser;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -33,17 +34,11 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'login'],
                         'allow' => true,
-                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['addtext'],
+                        'actions' => ['logout', 'profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -266,21 +261,15 @@ class SiteController extends Controller
     }
 
     /**
-     * Allow user to add custom text
-     *
-     * @return string
+     * User profile
      */
-    public function actionAddtext()
+    public function actionProfile()
     {
-        $text = new Text();
 
-        if ($text->load(Yii::$app->request->post()) && $text->save()) {
-            (new TextParser())->parseTextFromModel($text);
-            return $this->render('textView', ['model' => $text]);
-        }
+        $user = User::findOne(Yii::$app->user->id);
 
-        return $this->render('textCreate', [
-            'model' => $text,
+        return $this->render('profile/index', [
+            'user' => $user
         ]);
     }
 }

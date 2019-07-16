@@ -41,6 +41,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '<alias:\w+>' => 'site/<alias>',
+                'text/<alias:\w+>' => 'text/<alias>',
+                'word/<alias:\w+>' => 'word/<alias>',
             ],
         ],
     ],

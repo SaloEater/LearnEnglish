@@ -11,6 +11,7 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+$this->registerCssFile('css/frontend.css');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -36,15 +37,12 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Add text', 'url' => ['/site/addtext']],
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        //['label' => 'Home', 'url' => ['/site/index']],
+        //['label' => 'About', 'url' => ['/site/about']],
+        //['label' => 'Contact', 'url' => ['/site/contact']],
     ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
+    if (!Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Profile', 'url' => ['/site/profile/']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -53,6 +51,9 @@ AppAsset::register($this);
             )
             . Html::endForm()
             . '</li>';
+    } else {
+        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

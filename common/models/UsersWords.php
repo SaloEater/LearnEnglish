@@ -12,6 +12,7 @@ use Yii;
  * @property int $word_id
  * @property int $count
  * @property int $order
+ * @property int $status
  *
  * @property User $user
  * @property Word $word
@@ -32,7 +33,7 @@ class UsersWords extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'word_id', 'count', 'order'], 'integer'],
+            [['user_id', 'word_id', 'count', 'order', 'status'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['word_id'], 'exist', 'skipOnError' => true, 'targetClass' => Word::className(), 'targetAttribute' => ['word_id' => 'id']],
         ];
@@ -49,6 +50,7 @@ class UsersWords extends \yii\db\ActiveRecord
             'word_id' => 'Word ID',
             'count' => 'Count',
             'order' => 'Order',
+            'status' => 'Status',
         ];
     }
 
