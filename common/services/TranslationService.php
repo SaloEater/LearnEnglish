@@ -33,6 +33,7 @@ class TranslationService
      * @param string $content
      * @param string $type
      * @return Translation|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException
      */
     public function getByContentAndType(string $content, string $type)
     {
@@ -44,6 +45,9 @@ class TranslationService
         return $form;
     }
 
+    /**
+     * @param Translation $form
+     */
     public function save(Translation $form)
     {
         if (!$form->save()) {

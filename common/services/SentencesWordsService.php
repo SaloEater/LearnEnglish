@@ -17,12 +17,21 @@ class SentencesWordsService
         $this->sentenceswords = new SentencesWordsRepository();
     }
 
+    /**
+     * @param int $sentence_id
+     * @param int $word_id
+     */
     public function EstablishLinkBetween(int $sentence_id, int $word_id)
     {
         $this->getByIDs($sentence_id, $word_id);
     }
 
-
+    /**
+     * @param int $sentence_id
+     * @param int $word_id
+     * @return SentencesWords|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException
+     */
     public function getByIDs(int $sentence_id, int $word_id)
     {
         try {
@@ -33,7 +42,11 @@ class SentencesWordsService
         return $form;
     }
 
-
+    /**
+     * @param int $sentence_id
+     * @param int $word_id
+     * @return SentencesWords
+     */
     public function createWithIDs(int $sentence_id, int $word_id)
     {
         $sentenceword = new SentencesWords();
@@ -43,7 +56,9 @@ class SentencesWordsService
         return $sentenceword;
     }
 
-
+    /**
+     * @param SentencesWords $formsWords
+     */
     public function save(SentencesWords $formsWords)
     {
         if (!$formsWords->save()) {

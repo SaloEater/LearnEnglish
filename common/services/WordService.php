@@ -30,7 +30,8 @@ class WordService
 
     /**
      * @param string $content
-     * @return Word
+     * @return Word|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException
      */
     public function getByContent(string $content)
     {

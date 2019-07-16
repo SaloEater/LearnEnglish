@@ -265,6 +265,11 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * Allow user to add custom text
+     *
+     * @return string
+     */
     public function actionAddtext()
     {
         $text = new Text();

@@ -30,7 +30,8 @@ class FormService
 
     /**
      * @param string $content
-     * @return Form
+     * @return Form|ActiveRecord
+     * @throws NotFoundHttpException
      */
     public function getByContent(string $content)
     {
@@ -42,6 +43,10 @@ class FormService
         return $form;
     }
 
+    /**
+     * @param Form $form
+     * @param bool $increment
+     */
     public function save(Form $form, $increment = true)
     {
         if ($increment) {

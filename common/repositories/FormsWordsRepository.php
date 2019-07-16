@@ -14,7 +14,12 @@ class FormsWordsRepository extends IRepository
         $this->type = FormsWords::class;
     }
 
-
+    /**
+     * @param int $form_id
+     * @param int $word_id
+     * @return \yii\db\ActiveRecord
+     * @throws NotFoundHttpException
+     */
     public function getByIDs(int $form_id, int $word_id)
     {
         if (!$fw = $this->getBy([

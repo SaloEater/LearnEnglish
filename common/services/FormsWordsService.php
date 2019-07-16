@@ -17,12 +17,21 @@ class FormsWordsService
         $this->formswords = new FormsWordsRepository();
     }
 
+    /**
+     * @param int $form_id
+     * @param int $word_id
+     */
     public function EstablishLinkBetween(int $form_id, int $word_id)
     {
         $this->getByIDs($form_id, $word_id);
     }
 
-
+    /**
+     * @param int $form_id
+     * @param int $word_id
+     * @return FormsWords|\yii\db\ActiveRecord
+     * @throws NotFoundHttpException
+     */
     public function getByIDs(int $form_id, int $word_id)
     {
         try {
@@ -33,7 +42,11 @@ class FormsWordsService
         return $form;
     }
 
-
+    /**
+     * @param int $form_id
+     * @param int $word_id
+     * @return FormsWords
+     */
     public function createWithIDs(int $form_id, int $word_id)
     {
         $formswords = new FormsWords();
@@ -43,7 +56,9 @@ class FormsWordsService
         return $formswords;
     }
 
-
+    /**
+     * @param FormsWords $formsWords
+     */
     public function save(FormsWords $formsWords)
     {
         if (!$formsWords->save()) {

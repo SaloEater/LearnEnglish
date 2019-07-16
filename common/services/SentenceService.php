@@ -16,6 +16,9 @@ class SentenceService
         $this->sentences = new SentenceRepository();
     }
 
+    /**
+     * @param Sentence $sentence
+     */
     public function save(Sentence $sentence)
     {
         if (!$sentence->save()) {
