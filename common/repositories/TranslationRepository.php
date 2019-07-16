@@ -16,11 +16,12 @@ class TranslationRepository extends IRepository
      * @return \yii\db\ActiveRecord
      * @throws NotFoundHttpException
      */
-    public function getByTrAndType(string $content, string $type)
+    public function getByTrAndTypeForWord(string $content, string $type, int $word_id)
     {
         if (!$form = $this->getBy([
             'content' => $content,
-            'type' => $type
+            'type' => $type,
+            'word_id' => $word_id
         ])) {
             throw new NotFoundHttpException('Translation is not found');
         }

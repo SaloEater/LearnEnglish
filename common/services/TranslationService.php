@@ -18,13 +18,17 @@ class TranslationService
     /**
      * @param string $content
      * @param string $type
+     * @param int $word_id
+     * @param int $sort
      * @return Translation
      */
-    public function createWithContentAndType(string $content, string $type)
+    public function createWithContentAndTypeForWord(string $content, string $type, int $word_id, int $sort)
     {
         $translation = new Translation();
         $translation->content = $content;
         $translation->type = $type;
+        $translation->word_id = $word_id;
+        $translation->sort = $sort;
         $this->save($translation);
         return $translation;
     }
@@ -35,14 +39,14 @@ class TranslationService
      * @return Translation|\yii\db\ActiveRecord
      * @throws NotFoundHttpException
      */
-    public function getByContentAndType(string $content, string $type)
+    public function ensureExists(string $content, string $type, int $word_id, $sort)
     {
         try {
-            $form = $this->translations->getByTrAndType($content, $type);
+            $translation = $this->translations->getByTrAndTypeForWord($content, $type, $word_id);
         } catch(\DomainException $e) {
-            $form = $this->createWithContentAndType($content, $type);
+            $translation = $this->createWithContentAndTypeForWord($content, $type, $word_id, $sort);
         }
-        return $form;
+        return $translation;
     }
 
     /**
