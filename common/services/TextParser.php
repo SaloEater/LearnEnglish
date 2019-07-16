@@ -73,7 +73,7 @@ class TextParser
                 $word = $this->wordService->getByContent($wordContent);
                 $this->formswordsService->EstablishLinkBetween($form->id, $word->id);
                 $this->sentenceswordsService->EstablishLinkBetween($sentence_id, $word->id);
-
+                $this->wordService->save($word);
 
 
                 foreach ($common as $sort => $description) {

@@ -6,6 +6,7 @@ use common\models\Form;
 use common\models\Word;
 use common\repositories\WordRepository;
 use yii\web\NotFoundHttpException;
+use \yii\db\Query;
 
 class WordService
 {
@@ -24,7 +25,7 @@ class WordService
     {
         $word = new Word();
         $word->content = $content;
-        $this->save($word);
+        $this->save($word, false);
         return $word;
     }
 
@@ -36,18 +37,43 @@ class WordService
     public function getByContent(string $content)
     {
         try {
-            $form = $this->words->getByContent($content);
+            $word = $this->words->getByContent($content);
         } catch(\DomainException $e) {
-            $form = $this->createWithContent($content);
+            $word = $this->createWithContent($content);
         }
-        return $form;
+        return $word;
     }
 
+    /**
+     * @param Word[] $items
+     */
 
     public function save(Word $word, $increment = true)
     {
         if ($increment) {
             $word->count++;
+            $beforeUS = (new Query())
+                ->from('word')
+                ->where(['>', 'count', $word->count])
+                ->count();
+            $items = (new Query())
+                ->select('*')
+                ->from('word')
+                ->where(['count' => $word->count])->all();
+            foreach ($items as $item) {
+                if ((strcmp($item->content, $word->content)) == 1) {
+                    $beforeUS++;
+                }
+            }
+            if ($word->order) {
+                \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`<' . $word->order . ' AND ' . '`order`>' . $beforeUS)
+                    ->queryScalar();
+            } else {
+                $q = "UPDATE `word` SET `order`=`order`+1 WHERE `order`>" . $beforeUS;
+                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS);
+                $b->execute();
+            }
+            $word->order = $beforeUS+1;
         }
         if (!$word->save()) {
             throw new \RuntimeException('Form saving error');

@@ -24,7 +24,7 @@ class FormService
     {
         $form = new Form();
         $form->content = $content;
-        $this->save($form);
+        $this->save($form, false);
         return $form;
     }
 
