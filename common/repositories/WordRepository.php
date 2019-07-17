@@ -2,6 +2,8 @@
 namespace common\repositories;
 use common\repositories\IRepository;
 use common\models\Word;
+use phpDocumentor\Reflection\Types\Integer;
+use yii\db\Query;
 use yii\web\NotFoundHttpException;
 
 class WordRepository extends IRepository
@@ -26,5 +28,22 @@ class WordRepository extends IRepository
         }
 
         return $form;
+    }
+
+    public function countWordsBeforeUs($count)
+    {
+        return (new Query())
+            ->from('word')
+            ->where(['>', 'count', $count])
+            ->count();
+    }
+
+    public function countWordsOnLevel($count)
+    {
+        return (new Query())
+            ->select('*')
+            ->from('word')
+            ->where(['count' => $count])
+            ->all();
     }
 }

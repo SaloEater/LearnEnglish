@@ -44,6 +44,30 @@ class WordService
         return $word;
     }
 
+    public function setOrder(Word $word)
+    {
+        $count = $word->count;
+        $beforeUS = $this->words->countWordsBeforeUs($count);
+        $items = $this->words->countWordsOnLevel($count);
+        foreach ($items as $item) {
+            $wordContent = $word->content;
+            if ((strcmp($wordContent, $item['content'])) == 1) {
+                $beforeUS++;
+            }
+        }
+        if ($word->order) {
+            $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`<' . $word->order . ' AND ' . '`order`>' . $beforeUS);
+//                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS . 'AND' . 'order <  ' . $word->order);
+            $b->execute();
+        } else {
+//                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS);
+            $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`>' . $beforeUS);
+            $b->execute();
+        }
+        $word->order = $beforeUS+1;
+        return $word;
+    }
+
     /**
      * @param Word[] $items
      */
@@ -52,30 +76,7 @@ class WordService
     {
         if ($increment) {
             $word->count++;
-            $beforeUS = (new Query())
-                ->from('word')
-                ->where(['>', 'count', $word->count])
-                ->count();
-            $items = (new Query())
-                ->select('*')
-                ->from('word')
-                ->where(['count' => $word->count])->all();
-            foreach ($items as $item) {
-                $wordContent = $word->content;
-                if ((strcmp($wordContent, $item['content'])) == 1) {
-                    $beforeUS++;
-                }
-            }
-            if ($word->order) {
-                $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`<' . $word->order . ' AND ' . '`order`>' . $beforeUS);
-//                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS . 'AND' . 'order <  ' . $word->order);
-                $b->execute();
-            } else {
-//                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS);
-                $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`>' . $beforeUS);
-                $b->execute();
-            }
-            $word->order = $beforeUS+1;
+            $this->setOrder($word);
         }
         if (!$word->save()) {
             throw new \RuntimeException('Form saving error');
