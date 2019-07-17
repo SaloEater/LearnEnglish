@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\entities\Text;
+use common\entities\User;
 use common\forms\LoginForm;
 use common\repositories\NotFoundException;
 use common\services\AuthService;
@@ -36,9 +37,8 @@ class SiteController extends Controller
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'login'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['index', 'signup', 'login'],
+                        'allow' => true
                     ],
                     [
                         'actions' => ['logout', 'profile'],

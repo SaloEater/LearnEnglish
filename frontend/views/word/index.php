@@ -5,7 +5,7 @@
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use common\models\UsersWords;
+use common\entities\UsersWords;
 
 ?>
 

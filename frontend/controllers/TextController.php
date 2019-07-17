@@ -4,8 +4,8 @@
 namespace frontend\controllers;
 
 use backend\models\TextSearch;
-use common\models\Text;
-use common\models\User;
+use common\entities\Text;
+use common\entities\User;
 use common\repositories\TextRepository;
 use common\services\TextParser;
 use Yii;

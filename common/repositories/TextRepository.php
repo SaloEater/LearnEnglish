@@ -4,7 +4,7 @@
 namespace common\repositories;
 
 
-use common\models\Text;
+use common\entities\Text;
 use yii\web\NotFoundHttpException;
 
 class TextRepository extends IRepository

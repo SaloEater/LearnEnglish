@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/* @var $user \common\models\User */
+/* @var $user \common\entities\User */
 ?>
 
 <div class="left-padding">

@@ -3,10 +3,10 @@
 
 namespace frontend\controllers;
 
-use common\models\Text;
-use common\models\User;
-use common\models\UsersWords;
-use common\models\Word;
+use common\entities\Text;
+use common\entities\User;
+use common\entities\UsersWords;
+use common\entities\Word;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
