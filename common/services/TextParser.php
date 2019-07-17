@@ -86,7 +86,7 @@ class TextParser
                 }
             }
         } else {
-            throwException(new \DomainException("Can't reach wordAPI server"));
+            throw new \DomainException("Can't reach wordAPI server");
         }
     }
 

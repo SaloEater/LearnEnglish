@@ -81,7 +81,7 @@ class TextController extends Controller
     {
         $text = new Text();
 
-        if ($text->load(Yii::$app->request->post())) {
+        if ($text->load(Yii::$app->request->post()) && $text->save()) {
             (new TextParser())->parseTextFromModel($text);
             $this->redirect('index');
         }
