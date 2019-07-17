@@ -61,16 +61,18 @@ class WordService
                 ->from('word')
                 ->where(['count' => $word->count])->all();
             foreach ($items as $item) {
-                if ((strcmp($item->content, $word->content)) == 1) {
+                $wordContent = $word->content;
+                if ((strcmp($wordContent, $item['content'])) == 1) {
                     $beforeUS++;
                 }
             }
             if ($word->order) {
-                \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`<' . $word->order . ' AND ' . '`order`>' . $beforeUS)
-                    ->queryScalar();
+                $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`<' . $word->order . ' AND ' . '`order`>' . $beforeUS);
+//                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS . 'AND' . 'order <  ' . $word->order);
+                $b->execute();
             } else {
-                $q = "UPDATE `word` SET `order`=`order`+1 WHERE `order`>" . $beforeUS;
-                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS);
+//                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS);
+                $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`>' . $beforeUS);
                 $b->execute();
             }
             $word->order = $beforeUS+1;
