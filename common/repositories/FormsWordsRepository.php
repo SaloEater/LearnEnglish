@@ -4,7 +4,7 @@
 namespace common\repositories;
 
 
-use common\models\FormsWords;
+use common\entities\FormsWords;
 use yii\web\NotFoundHttpException;
 
 class FormsWordsRepository extends IRepository

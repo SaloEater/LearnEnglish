@@ -2,8 +2,7 @@
 
 namespace common\services;
 
-use common\models\Form;
-use common\models\Word;
+use common\entities\Word;
 use common\repositories\WordRepository;
 use yii\web\NotFoundHttpException;
 use \yii\db\Query;

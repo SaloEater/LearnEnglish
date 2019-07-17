@@ -1,8 +1,6 @@
 <?php
 
-namespace common\models;
-
-use Yii;
+namespace common\entities;
 
 /**
  * This is the model class for table "forms_words".

@@ -2,7 +2,7 @@
 
 namespace common\repositories;
 
-use common\models\Form;
+use common\entities\Form;
 use yii\web\NotFoundHttpException;
 
 class FormRepository extends IRepository

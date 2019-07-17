@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\SentencesWords */
+/* @var $model common\entities\SentencesWords */
 
 $this->title = 'Create Sentences Words';
 $this->params['breadcrumbs'][] = ['label' => 'Sentences Words', 'url' => ['index']];

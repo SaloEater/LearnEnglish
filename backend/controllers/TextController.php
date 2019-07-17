@@ -2,14 +2,14 @@
 
 namespace backend\controllers;
 
+use backend\models\TextSearch;
+use common\entities\Text;
 use common\services\TextParser;
 use Yii;
-use common\models\Text;
-use backend\models\TextSearch;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * TextController implements the CRUD actions for Text model.

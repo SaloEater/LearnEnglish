@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models;
+namespace common\entities;
 
-use Yii;
 use common\behaviours\MD5Behavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;

@@ -2,10 +2,8 @@
 
 namespace common\services;
 
-use common\models\Form;
+use common\entities\Form;
 use common\repositories\FormRepository;
-use yii\db\ActiveRecord;
-use yii\web\NotFoundHttpException;
 
 class FormService
 {

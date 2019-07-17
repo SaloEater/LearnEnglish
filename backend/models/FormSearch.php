@@ -2,12 +2,12 @@
 
 namespace backend\models;
 
+use common\entities\Form;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Form;
 
 /**
- * FormSearch represents the model behind the search form of `common\models\Form`.
+ * FormSearch represents the model behind the search form of `common\entities\Form`.
  */
 class FormSearch extends Form
 {

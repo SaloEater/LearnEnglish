@@ -2,12 +2,12 @@
 
 namespace backend\models;
 
+use common\entities\Text;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Text;
 
 /**
- * TextSearch represents the model behind the search form of `common\models\Text`.
+ * TextSearch represents the model behind the search form of `common\entities\Text`.
  */
 class TextSearch extends Text
 {

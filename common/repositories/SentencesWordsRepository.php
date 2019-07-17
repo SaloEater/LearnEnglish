@@ -4,7 +4,7 @@
 namespace common\repositories;
 
 
-use common\models\SentencesWords;
+use common\entities\SentencesWords;
 use yii\web\NotFoundHttpException;
 
 class SentencesWordsRepository extends IRepository

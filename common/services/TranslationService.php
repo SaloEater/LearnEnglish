@@ -2,9 +2,8 @@
 
 namespace common\services;
 
-use common\models\Translation;
+use common\entities\Translation;
 use common\repositories\TranslationRepository;
-use yii\web\NotFoundHttpException;
 
 class TranslationService
 {

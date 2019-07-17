@@ -4,9 +4,8 @@
 namespace common\services;
 
 
-use common\models\SentencesWords;
+use common\entities\SentencesWords;
 use common\repositories\SentencesWordsRepository;
-use yii\web\NotFoundHttpException;
 
 class SentencesWordsService
 {

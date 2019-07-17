@@ -1,23 +1,23 @@
 <?php
 namespace frontend\tests\unit\models;
 
-use frontend\models\ContactForm;
+use frontend\forms\ContactForm;
 use yii\mail\MessageInterface;
 
 class ContactFormTest extends \Codeception\Test\Unit
 {
     public function testSendEmail()
     {
-        $model = new ContactForm();
+        $form = new ContactForm();
 
-        $model->attributes = [
+        $form->attributes = [
             'name' => 'Tester',
             'email' => 'tester@example.com',
             'subject' => 'very important letter subject',
             'body' => 'body of current message',
         ];
 
-        expect_that($model->sendEmail('admin@example.com'));
+        expect_that($form->sendEmail('admin@example.com'));
 
         // using Yii2 module actions to check email was sent
         $this->tester->seeEmailIsSent();
