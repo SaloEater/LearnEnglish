@@ -20,6 +20,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use DomainException;
 
 /**
  * Site controller
@@ -99,7 +100,7 @@ class SiteController extends Controller
                 $user = (new AuthService())->auth($form);
                 Yii::$app->user->login($user, $form->rememberMe ? 3600 * 24 * 30 : 0);
                 return $this->goBack();
-            } catch (\DomainException $e) {
+            } catch (DomainException $e) {
                 throw new BadRequestHttpException($e->getMessage(), 0, $e);
             }
         } else {
@@ -208,7 +209,7 @@ class SiteController extends Controller
 
         try {
             $service->validateToken($token);
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
 
@@ -219,7 +220,7 @@ class SiteController extends Controller
                 $service->reset($token, $form);
                 Yii::$app->session->setFlash('success', 'New password saved.');
                 return $this->goHome();
-            } catch (\DomainException $e) {
+            } catch (DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
@@ -243,7 +244,7 @@ class SiteController extends Controller
 
         try {
             $service->validateToken($token);
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
 
@@ -251,7 +252,7 @@ class SiteController extends Controller
             $service->confirm($token);
             Yii::$app->session->setFlash('success', 'Your email is confirmed.');
             return $this->redirect('login');
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             Yii::$app->errorHandler->logException($e);
             Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
             return $this->goHome();
@@ -271,7 +272,7 @@ class SiteController extends Controller
                 (new SignupService())->resendRequest($form);
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
                 return $this->goHome();
-            } catch (\DomainException $e) {
+            } catch (DomainException $e) {
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }

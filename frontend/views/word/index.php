@@ -1,10 +1,7 @@
 <?php
 
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
+/* @var $dataProvider  ActiveDataProvider*/
 use yii\data\ActiveDataProvider;
-use yii\helpers\Html;
-use yii\helpers\Url;
 use common\entities\UsersWords;
 
 ?>

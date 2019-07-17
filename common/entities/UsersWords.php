@@ -1,9 +1,7 @@
 <?php
 
 namespace common\entities;
-
-use Yii;
-
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "users_words".
  *
@@ -17,7 +15,7 @@ use Yii;
  * @property User $user
  * @property Word $word
  */
-class UsersWords extends \yii\db\ActiveRecord
+class UsersWords extends ActiveRecord
 {
     /**
      * {@inheritdoc}
