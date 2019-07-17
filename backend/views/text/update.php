@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Text */
+/* @var $model common\entities\Text */
 
 $this->title = 'Update Text: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Texts', 'url' => ['index']];

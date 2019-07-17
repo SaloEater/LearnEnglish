@@ -1,7 +1,7 @@
 <?php
 namespace common\repositories;
+use common\entities\Word;
 use common\repositories\IRepository;
-use common\models\Word;
 use phpDocumentor\Reflection\Types\Integer;
 use yii\db\Query;
 use yii\web\NotFoundHttpException;

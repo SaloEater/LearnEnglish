@@ -1,5 +1,5 @@
 <?php
-namespace common\models;
+namespace common\entities;
 
 use common\services\UserService;
 use Yii;
@@ -30,22 +30,43 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-
-    const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
+    const STATUS_WAIT = 9;
     const STATUS_ACTIVE = 10;
 
-    public static function signup($username, $email, $password)
+    public static function signup(string $username, string $email, string $password)
     {
         $user = new static();
         $user->username = $username;
         $user->email = $email;
         $user->setPassword($password);
         $user->generateAuthKey();
+        $user->status = self::STATUS_WAIT;
         $user->generateEmailVerificationToken();
-        $user->save();
-        (new UserService())->sendEmail($user);
         return $user;
+    }
+
+    public function confirmSignup()
+    {
+        if (!$this->isWait()) {
+            throw new \DomainException('User is already active');
+        }
+        $this->status = self::STATUS_ACTIVE;
+        $this->removeEmailVerificationToken();
+    }
+
+    public function removeEmailVerificationToken()
+    {
+        $this->verification_token = null;
+    }
+
+    public function isActive()
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function isWait()
+    {
+        return $this->status == self::STATUS_WAIT;
     }
 
     /**
@@ -72,8 +93,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_WAIT]],
         ];
     }
 
@@ -182,7 +203,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByVerificationToken($token) {
         return static::findOne([
             'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
+            'status' => self::STATUS_WAIT
         ]);
     }
 
@@ -239,9 +260,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Generates password hash from password and sets it to the model
-     *
-     * @param string $password
+     * @param $password
+     * @throws \yii\base\Exception
      */
     public function setPassword($password)
     {
@@ -261,7 +281,19 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function generatePasswordResetToken()
     {
+        if (!empty($this->password_reset_token) && self::isPasswordResetTokenValid($this->password_reset_token)) {
+            throw new \DomainException('Token is already requested');
+        }
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    public function resetPassword($password)
+    {
+        if (empty($this->password_reset_token)) {
+            throw new \DomainException('Token is not requested');
+        }
+        $this->setPassword($password);
+        $this->removePasswordResetToken();
     }
 
     public function generateEmailVerificationToken()

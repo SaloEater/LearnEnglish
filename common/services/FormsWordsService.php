@@ -4,9 +4,8 @@
 namespace common\services;
 
 
-use common\models\FormsWords;
+use common\entities\FormsWords;
 use common\repositories\FormsWordsRepository;
-use yii\web\NotFoundHttpException;
 
 class FormsWordsService
 {

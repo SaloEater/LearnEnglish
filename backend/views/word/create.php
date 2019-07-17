@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Word */
+/* @var $model common\entities\Word */
 
 $this->title = 'Create Word';
 $this->params['breadcrumbs'][] = ['label' => 'Words', 'url' => ['index']];

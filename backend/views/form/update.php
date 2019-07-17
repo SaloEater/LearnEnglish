@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Form */
+/* @var $model common\entities\Form */
 
 $this->title = 'Update Form: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Forms', 'url' => ['index']];

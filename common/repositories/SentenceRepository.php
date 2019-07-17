@@ -4,7 +4,7 @@
 namespace common\repositories;
 
 
-use common\models\Sentence;
+use common\entities\Sentence;
 
 class SentenceRepository extends IRepository
 {

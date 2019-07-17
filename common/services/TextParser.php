@@ -2,8 +2,8 @@
 
 namespace common\services;
 
-use common\models\Sentence;
-use common\models\Text;
+use common\entities\Sentence;
+use common\entities\Text;
 
 class TextParser
 {

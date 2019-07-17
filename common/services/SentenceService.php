@@ -4,7 +4,7 @@
 namespace common\services;
 
 
-use common\models\Sentence;
+use common\entities\Sentence;
 use common\repositories\SentenceRepository;
 
 class SentenceService

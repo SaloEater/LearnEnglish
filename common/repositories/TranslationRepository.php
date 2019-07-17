@@ -1,6 +1,6 @@
 <?php
 namespace common\repositories;
-use common\models\Translation;
+use common\entities\Translation;
 use yii\web\NotFoundHttpException;
 
 class TranslationRepository extends IRepository

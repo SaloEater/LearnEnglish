@@ -2,12 +2,12 @@
 
 namespace backend\models;
 
+use common\entities\Sentence;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Sentence;
 
 /**
- * SentenceSearch represents the model behind the search form of `common\models\Sentence`.
+ * SentenceSearch represents the model behind the search form of `common\entities\Sentence`.
  */
 class SentenceSearch extends Sentence
 {

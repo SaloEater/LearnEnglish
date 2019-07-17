@@ -2,13 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
-use common\models\SentencesWords;
 use backend\models\SentencesWordsSearch;
+use common\entities\SentencesWords;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * SentencesWordsController implements the CRUD actions for SentencesWords model.
