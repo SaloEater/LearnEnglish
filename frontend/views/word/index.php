@@ -3,6 +3,10 @@
 /* @var $dataProvider  ActiveDataProvider*/
 use yii\data\ActiveDataProvider;
 use common\entities\UsersWords;
+use yii\helpers\ArrayHelper;
+$models = $dataProvider->getModels();
+
+$countMap = ArrayHelper::map($models, 'count', 'count');
 
 ?>
 
@@ -26,6 +30,7 @@ use common\entities\UsersWords;
             'value' => function (UsersWords $data) {
                 return $data->count;
             },
+            'filter' => $countMap
         ],
         [
             'attribute' => 'Глобально',
