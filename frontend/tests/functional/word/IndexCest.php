@@ -1,6 +1,6 @@
 <?php
 
-use backend\tests\FunctionalTester;
+use frontend\tests\FunctionalTester;
 
 class IndexCest
 {
@@ -22,13 +22,21 @@ class IndexCest
             'word' => [
                 'class' => \common\fixtures\WordFixture::class,
                 'dataFile' => codecept_data_dir() . 'word_data.php'
+            ],
+            'users_words' => [
+                'class' => \common\fixtures\UsersWordsFixture::class,
+                'dataFile' => codecept_data_dir() . 'users_words_data.php'
+            ],
+            'sentences_words' => [
+                'class' => \common\fixtures\SentencesWordsFixture::class,
+                'dataFile' => codecept_data_dir() . 'sentences_words_data.php'
             ]
         ];
     }
 
     public function _before(FunctionalTester $I)
     {
-        $I->amOnRoute('/login');
+        $I->amOnRoute('/site/login');
         $I->submitForm('form#login-form', [
            'LoginForm[username]' => 'erau',
            'LoginForm[password]' => 'password_0',
@@ -37,9 +45,11 @@ class IndexCest
 
     public function checkView(FunctionalTester $I)
     {
-        $I->amOnRoute('/word/');
+        $I->amOnRoute('/word/index');
 
+        $I->seeInCurrentUrl('/word/');
 
+        $I->see('blah');
 
     }
 }
