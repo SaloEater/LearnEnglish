@@ -50,6 +50,5 @@ class IndexCest
         $I->seeInCurrentUrl('/word/');
 
         $I->see('blah');
-
     }
 }
