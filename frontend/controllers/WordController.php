@@ -3,6 +3,9 @@
 
 namespace frontend\controllers;
 
+use backend\models\MegaUsersWordsSearch;
+use backend\models\UsersWordsSearch;
+use common\entities\User;
 use common\entities\UsersWords;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -48,7 +51,10 @@ class WordController extends Controller
 
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
+        $filterModel = new MegaUsersWordsSearch();
+
+        $dataProvider = $filterModel->search(Yii::$app->request->queryParams);
+        /*$dataProvider = new ActiveDataProvider([
             'query' => UsersWords::find()->where(['user_id' => Yii::$app->user->id]),
             'pagination' => [
                 'pageSize' => 10,
@@ -58,10 +64,11 @@ class WordController extends Controller
                     'count' => SORT_ASC,
                 ]
             ],
-        ]);
+        ]);*/
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'filterModel'=> $filterModel
         ]);
     }
 
