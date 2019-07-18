@@ -55,7 +55,7 @@ class WordController extends Controller
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'count' => SORT_DESC,
+                    'count' => SORT_ASC,
                 ]
             ],
         ]);
