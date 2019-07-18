@@ -48,10 +48,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function confirmSignup()
     {
         if (!$this->isWait()) {
-            throw new \DomainException('User is already active');
+            throw new \DomainException('Email is already confirmed.');
         }
         $this->status = self::STATUS_ACTIVE;
-        $this->removeEmailVerificationToken();
+//        $this->removeEmailVerificationToken();
     }
 
     public function removeEmailVerificationToken()
