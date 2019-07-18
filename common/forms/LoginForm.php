@@ -41,7 +41,7 @@ class LoginForm extends Model
             /**
              * @var $user User
              */
-            $user = (new UserRepository())->getByUsername($this->username);
+            $user = User::findOne(['username' => $this->username]);
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }

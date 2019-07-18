@@ -14,7 +14,7 @@ return [
         'username' => 'test.test',
         'auth_key' => 'O87GkY3_UfmMHYkyezZ7QLfmkKNsllzT',
         // Test1234
-        'password_hash' => 'O87GkY3_UfmMHYkyezZ7QLfmkKNsllzT',
+        'password_hash' => '$2y$13$nJ1WDlBaGcbCdbNC5.5l4.sgy.OMEKCqtDQOdQ2OWpgiKRWYyzzne',
         'email' => 'test@mail.com',
         'status' => '9',
         'created_at' => '1548675330',

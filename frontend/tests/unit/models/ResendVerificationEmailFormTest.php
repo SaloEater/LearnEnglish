@@ -3,12 +3,15 @@
 namespace frontend\tests\unit\models;
 
 
+use Codeception\AssertThrows;
 use Codeception\Test\Unit;
 use common\fixtures\UserFixture;
 use frontend\forms\ResendVerificationEmailForm;
+use frontend\services\auth\SignupService;
 
 class ResendVerificationEmailFormTest extends Unit
 {
+    use AssertThrows;
     /**
      * @var \frontend\tests\UnitTester
      */
@@ -63,15 +66,17 @@ class ResendVerificationEmailFormTest extends Unit
 
     public function testSuccessfullyResend()
     {
-        $model = new ResendVerificationEmailForm();
-        $model->attributes = [
+        $form = new ResendVerificationEmailForm();
+        $form->attributes = [
             'email' => 'test@mail.com'
         ];
 
-        expect($model->validate())->true();
-        expect($model->hasErrors())->false();
+        expect($form->validate())->true();
+        expect($form->hasErrors())->false();
 
-        expect($model->sendEmail())->true();
+        $this->assertNotThrows(\DomainException::class, function() use ($form) {
+            (new SignupService())->resendRequest($form);
+        });
         $this->tester->seeEmailIsSent();
 
         $mail = $this->tester->grabLastSentEmail();

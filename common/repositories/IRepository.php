@@ -6,8 +6,8 @@ use yii\db\ActiveRecord;
 
 class IRepository
 {
-    /*
-     * @var ActiveRecord $type
+    /**
+     * @var $type ActiveRecord
      */
     protected $type;
 
@@ -19,7 +19,7 @@ class IRepository
     protected function found($object)
     {
         if (!$object) {
-            throw new \DomainException((print_r($this->type))." is not found");
+            throw new NotFoundException(($this->type::className())." is not found");
         }
         return $object;
     }

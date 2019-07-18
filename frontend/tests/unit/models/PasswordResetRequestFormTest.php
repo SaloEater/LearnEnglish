@@ -2,13 +2,19 @@
 
 namespace frontend\tests\unit\models;
 
+use Codeception\AssertThrows;
 use common\entities\User;
 use common\fixtures\UserFixture as UserFixture;
+use common\repositories\NotFoundException;
+use common\services\AuthService;
 use frontend\forms\PasswordResetRequestForm;
+use frontend\services\auth\PasswordResetService;
 use Yii;
 
 class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 {
+    use AssertThrows;
+
     /**
      * @var \frontend\tests\UnitTester
      */
@@ -27,33 +33,44 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
 
     public function testSendMessageWithWrongEmailAddress()
     {
-        $model = new PasswordResetRequestForm();
-        $model->email = 'not-existing-email@example.com';
-        expect_not($model->sendEmail());
+        $form = new PasswordResetRequestForm();
+        $form->email = 'not-existing-email@example.com';
+        $this->assertThrowsWithMessage(NotFoundException::class, 'common\entities\User is not found', function() use ($form) {
+            (new PasswordResetService())->request($form);
+        });
     }
 
-    public function testNotSendEmailsToInactiveUser()
+    public function testNotSendEmailsToWaitUser()
     {
+        /**
+         * @var $user User
+         */
         $user = $this->tester->grabFixture('user', 1);
-        $model = new PasswordResetRequestForm();
-        $model->email = $user['email'];
-        expect_not($model->sendEmail());
+        $form = new PasswordResetRequestForm();
+        $form->email = $user->email;
+        $this->assertThrowsWithMessage(\DomainException::class, 'User has not confirmed email',function() use ($form) {
+            (new PasswordResetService())->request($form);
+        });
     }
 
     public function testSendEmailSuccessfully()
     {
         $userFixture = $this->tester->grabFixture('user', 0);
-        
-        $model = new PasswordResetRequestForm();
-        $model->email = $userFixture['email'];
+
+        $form = new PasswordResetRequestForm();
+        $form->email =$userFixture['email'];
+
         $user = User::findOne(['password_reset_token' => $userFixture['password_reset_token']]);
 
-        expect_that($model->sendEmail());
-        expect_that($user->password_reset_token);
+        (new PasswordResetService())->request($form);
+        /*$this->assertNotThrows(\DomainException::class, function() use ($form) {
+
+        });*/
+        expect_not($user->password_reset_token);
 
         $emailMessage = $this->tester->grabLastSentEmail();
         expect('valid email is sent', $emailMessage)->isInstanceOf('yii\mail\MessageInterface');
-        expect($emailMessage->getTo())->hasKey($model->email);
+        expect($emailMessage->getTo())->hasKey($form->email);
         expect($emailMessage->getFrom())->hasKey(Yii::$app->params['supportEmail']);
     }
 }

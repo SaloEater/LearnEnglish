@@ -281,6 +281,10 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function generatePasswordResetToken()
     {
+        if ($this->isWait()) {
+            throw new \DomainException('User has not confirmed email');
+        }
+
         if (!empty($this->password_reset_token) && self::isPasswordResetTokenValid($this->password_reset_token)) {
             throw new \DomainException('Token is already requested');
         }

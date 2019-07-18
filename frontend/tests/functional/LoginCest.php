@@ -2,6 +2,7 @@
 
 namespace frontend\tests\functional;
 
+use Codeception\AssertThrows;
 use frontend\tests\FunctionalTester;
 use common\fixtures\UserFixture;
 
@@ -26,7 +27,7 @@ class LoginCest
 
     public function _before(FunctionalTester $I)
     {
-        $I->amOnRoute('site/login');
+        $I->amOnRoute('/site/login');
     }
 
     protected function formParams($login, $password)
@@ -52,7 +53,7 @@ class LoginCest
 
     public function checkInactiveAccount(FunctionalTester $I)
     {
-        $I->submitForm('#login-form', $this->formParams('test.test', 'Test1234'));
+        $I->submitForm('#login-form', $this->formParams('test.test', 'root123'));
         $I->seeValidationError('Incorrect username or password');
     }
 

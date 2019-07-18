@@ -101,15 +101,17 @@ class SiteController extends Controller
                 Yii::$app->user->login($user, $form->rememberMe ? 3600 * 24 * 30 : 0);
                 return $this->goBack();
             } catch (DomainException $e) {
-                throw new BadRequestHttpException($e->getMessage(), 0, $e);
-            }
-        } else {
-            $form->password = '';
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+//                throw new BadRequestHttpException($e->getMessage(), 0, $e);
+                $form->password = '';
 
-            return $this->render('login', [
-                'model' => $form,
-            ]);
+            }
         }
+
+        return $this->render('login', [
+            'model' => $form,
+        ]);
     }
 
     /**
@@ -185,7 +187,7 @@ class SiteController extends Controller
                 (new PasswordResetService())->request($form);
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
                 return $this->goHome();
-            } catch (NotFoundException $e) {
+            } catch (DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }

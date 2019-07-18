@@ -39,9 +39,7 @@ class UserRepository extends IRepository
 
     public function getByEmail($email)
     {
-        if (!($user = $this->getBy(['email' => $email]))) {
-            throw new NotFoundException('User not found');
-        }
+        $user = $this->getBy(['email' => $email]);
         return $user;
     }
 
