@@ -247,16 +247,17 @@ class SiteController extends Controller
         try {
             $service->validateToken($token);
         } catch (DomainException $e) {
+            Yii::$app->errorHandler->logException($e);
             throw new BadRequestHttpException($e->getMessage());
         }
 
         try {
             $service->confirm($token);
-            Yii::$app->session->setFlash('success', 'Your email is confirmed.');
+            Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
             return $this->redirect('login');
         } catch (DomainException $e) {
             Yii::$app->errorHandler->logException($e);
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
+            Yii::$app->session->setFlash('error', $e->getMessage());
             return $this->goHome();
         }
     }

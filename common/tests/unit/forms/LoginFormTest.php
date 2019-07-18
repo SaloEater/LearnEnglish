@@ -2,6 +2,7 @@
 
 namespace common\tests\unit\forms;
 use Codeception\AssertThrows;
+use common\repositories\NotFoundException;
 use PHPUnit\Framework\AssertionFailedError;
 use common\fixtures\UserFixture;
 use common\forms\LoginForm;
@@ -41,7 +42,7 @@ class LoginFormTest extends \Codeception\Test\Unit
             'password' => 'not_existing_password',
         ]);
 
-        $this->assertThrows(\DomainException::class, function() use ($form){
+        $this->assertThrows(NotFoundException::class, function() use ($form){
             (new AuthService())->auth($form);
         });
         expect('user should not be logged in', Yii::$app->user->isGuest)->true();
@@ -57,8 +58,6 @@ class LoginFormTest extends \Codeception\Test\Unit
         $this->assertThrows(\DomainException::class, function() use ($form){
             (new AuthService())->auth($form);
         });
-        expect('error message should be set', $form->errors)->hasKey('password');
-        expect('user should not be logged in', Yii::$app->user->isGuest)->true();
     }
 
     public function testLoginCorrect()
@@ -68,8 +67,8 @@ class LoginFormTest extends \Codeception\Test\Unit
             'password' => 'password_0',
         ]);
 
-        $user = (new AuthService())->auth($form);
-        expect('error message should not be set', $form->errors)->hasntKey('password');
-        expect('user should be logged in', Yii::$app->user->isGuest)->false();
+        $this->assertNotThrows(\DomainException::class, function() use ($form){
+            (new AuthService())->auth($form);
+        });
     }
 }
