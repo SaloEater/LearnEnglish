@@ -13,9 +13,9 @@ use common\entities\UsersWords;
 use yii\helpers\ArrayHelper;
 $models = $dataProvider->getModels();
 
-$countMap = ArrayHelper::map($models, 'count', 'count');
 
-$globalCountMap = ArrayHelper::map($models, 'word.count', 'word.count');
+/*$globalCountMap = ArrayHelper::map($models, 'word.count', 'word.count');
+$countMap = ArrayHelper::map($models, 'count', 'count');*/
 
 ?>
 
@@ -35,53 +35,21 @@ $globalCountMap = ArrayHelper::map($models, 'word.count', 'word.count');
             'value' => function (UsersWords $data) {
                 return $data->status;
             },
-            'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
-                'status',
-                [
-                    '0' => 'Не изучено',
-                    '1' => 'Изучено',
-                ],
-                [
-                    'prompt' => [
-                        'text' => 'Все',
-                        'options' => ['value'=>""]
-                    ],
-                    'data' => [
-                        'pjax' => true,
-                    ],
-                    'class' => 'form-control'
-                ]),
+            'filter' => [
+                '0' => 'Не изучено',
+                '1' => 'Изучено',
+            ]
         ],
         [
             'label' => 'У вас',
-            'attribute' => 'count',
-            'value' => function (UsersWords $data) {
-                return $data->count;
-            },
-            'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
-                'count',
-                $countMap,
-                [
-                    'prompt' => [
-                        'text' => 'Все',
-                        'options' => ['value'=>""]
-                    ],
-                    'class' => 'form-control'
-                ]),
+            'attribute' => 'order',
+            'filter' => false
         ],
         [
             'attribute' => 'word',
-            'value' => 'word.count',
-            'label' => 'Глобально',
-            'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
-                'word',
-                [
-                    'prompt' => [
-                        'text' => 'Все',
-                        'options' => ['value'=>""]
-                    ],
-                    'class' => 'form-control'
-                ]),
+            'value' => 'word.order',
+            'label' => 'Рейтинг глобально',
+            'filter' => false
         ]
     ],
 ]) ?>
