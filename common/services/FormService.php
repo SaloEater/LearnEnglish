@@ -28,8 +28,8 @@ class FormService
 
     /**
      * @param string $content
-     * @return Form|ActiveRecord
-     * @throws NotFoundHttpException
+     * @return Form|\yii\db\ActiveRecord
+     * @throws \yii\web\NotFoundHttpException
      */
     public function getByContent(string $content)
     {

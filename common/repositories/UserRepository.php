@@ -50,17 +50,13 @@ class UserRepository extends IRepository
 
     public function getByPasswordToken($token)
     {
-        if (!($user = $this->getBy(['password_reset_token' => $token]))) {
-            throw new NotFoundException('User not found');
-        }
+        $user = $this->getBy(['password_reset_token' => $token]);
         return $user;
     }
 
     public function getByUsername($username)
     {
-        if (!($user = $this->getBy(['username' => $username]))) {
-            throw new NotFoundException('User not found');
-        }
+        $user = $this->getBy(['username' => $username]);
         return $user;
     }
 }
