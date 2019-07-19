@@ -42,7 +42,13 @@ $globalCountMap = ArrayHelper::map($models, 'word.count', 'word.count');
                     '1' => 'Изучено',
                 ],
                 [
-                    'prompt' => 'Все',
+                    'prompt' => [
+                        'text' => 'Все',
+                        'options' => ['value'=>""]
+                    ],
+                    'data' => [
+                        'pjax' => true,
+                    ],
                     'class' => 'form-control'
                 ]),
         ],
@@ -56,7 +62,10 @@ $globalCountMap = ArrayHelper::map($models, 'word.count', 'word.count');
                 'count',
                 $countMap,
                 [
-                    'prompt' => 'Все',
+                    'prompt' => [
+                        'text' => 'Все',
+                        'options' => ['value'=>""]
+                    ],
                     'class' => 'form-control'
                 ]),
         ],
@@ -66,9 +75,11 @@ $globalCountMap = ArrayHelper::map($models, 'word.count', 'word.count');
             'label' => 'Глобально',
             'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
                 'word',
-                $globalCountMap,
                 [
-                    'prompt' => 'Все',
+                    'prompt' => [
+                        'text' => 'Все',
+                        'options' => ['value'=>""]
+                    ],
                     'class' => 'form-control'
                 ]),
         ]
