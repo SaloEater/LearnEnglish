@@ -35,10 +35,22 @@ $countMap = ArrayHelper::map($models, 'count', 'count');*/
             'value' => function (UsersWords $data) {
                 return $data->status;
             },
-            'filter' => [
+            'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
+                'status',
+                [
+                    '0' => 'Не изучено',
+                    '1' => 'Изучено',
+                ],
+                [
+                    'prompt' => [
+                        'text' => 'Все',
+                        'options' => ['value'=>""]
+                    ],
+                    'class' => 'form-control'
+                ]),/*[
                 '0' => 'Не изучено',
                 '1' => 'Изучено',
-            ]
+            ]*/
         ],
         [
             'label' => 'У вас',

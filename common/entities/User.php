@@ -21,6 +21,7 @@ use yii\web\IdentityInterface;
  * @property int $created_at
  * @property int $updated_at
  * @property string $verification_token
+ * @property string $image_url
  *
  * @property Text[] $texts
  * @property Text[] $textsUpdated
@@ -95,6 +96,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_WAIT]],
+            ['image_url', 'safe']
         ];
     }
 

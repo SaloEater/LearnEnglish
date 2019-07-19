@@ -298,17 +298,4 @@ class SiteController extends Controller
             'model' => $text,
         ]);
     }
-
-    /**
-     * User profile
-     */
-    public function actionProfile()
-    {
-
-        $user = User::findOne(Yii::$app->user->id);
-
-        return $this->render('profile/index', [
-            'user' => $user
-        ]);
-    }
 }

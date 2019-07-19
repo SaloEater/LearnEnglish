@@ -78,7 +78,6 @@ class MegaUsersWordsSearch extends UsersWords
             'id' => $this->id,
             'user_id' => $this->user_id,
             'word_id' => $this->word_id,
-            'count' => $this->count,
             'order' => $this->order,
             'status' => $this->status,
         ]);
