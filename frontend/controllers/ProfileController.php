@@ -50,7 +50,7 @@ class ProfileController extends Controller
         $user = User::findOne(Yii::$app->user->id);
 
         if ($user->load(Yii::$app->request->post()) && $user->save()) {
-//            return $this->redirect('index');
+            return $this->redirect('index');
         }
 
         return $this->render('edit', [
