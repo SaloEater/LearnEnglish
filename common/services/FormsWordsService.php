@@ -19,6 +19,7 @@ class FormsWordsService
     /**
      * @param int $form_id
      * @param int $word_id
+     * @throws \yii\web\NotFoundHttpException
      */
     public function EstablishLinkBetween(int $form_id, int $word_id)
     {
@@ -29,7 +30,7 @@ class FormsWordsService
      * @param int $form_id
      * @param int $word_id
      * @return FormsWords|\yii\db\ActiveRecord
-     * @throws NotFoundHttpException
+     * @throws \yii\web\NotFoundHttpException
      */
     public function getByIDs(int $form_id, int $word_id)
     {
@@ -61,7 +62,7 @@ class FormsWordsService
     public function save(FormsWords $formsWords)
     {
         if (!$formsWords->save()) {
-            throw new \RuntimeException('Form saving error');
+            throw new \RuntimeException('Forms words saving error');
         }
     }
 }

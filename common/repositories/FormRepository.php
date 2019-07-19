@@ -9,7 +9,7 @@ class FormRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = Form::class;
+        $this->type = new Form();
     }
 
     /**
@@ -19,11 +19,9 @@ class FormRepository extends IRepository
      */
     public function getByContent(string $content)
     {
-        if (!$form = $this->getBy([
+        $form = $this->getBy([
             'content' => $content
-        ])) {
-            throw new NotFoundHttpException('Form is not found');
-        }
+        ]);
 
         return $form;
     }

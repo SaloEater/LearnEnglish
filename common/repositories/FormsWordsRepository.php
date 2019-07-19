@@ -11,7 +11,7 @@ class FormsWordsRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = FormsWords::class;
+        $this->type = new FormsWords();
     }
 
     /**
@@ -22,12 +22,10 @@ class FormsWordsRepository extends IRepository
      */
     public function getByIDs(int $form_id, int $word_id)
     {
-        if (!$fw = $this->getBy([
+        $fw = $this->getBy([
             'form_id' => $form_id,
             'word_id' => $word_id
-        ])) {
-            throw new NotFoundHttpException('Form is not found');
-        }
+        ]);
 
         return $fw;
     }

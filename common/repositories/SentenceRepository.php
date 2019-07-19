@@ -10,8 +10,6 @@ class SentenceRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = Sentence::class;
+        $this->type = new Sentence();
     }
-
-
 }

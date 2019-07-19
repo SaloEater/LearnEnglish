@@ -21,6 +21,10 @@ class AuthService
         $this->users = new UserRepository();
     }
 
+    /**
+     * @param LoginForm $form
+     * @return User
+     */
     public function auth(LoginForm $form)
     {
         /* @var $user User*/

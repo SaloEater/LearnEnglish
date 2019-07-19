@@ -66,9 +66,9 @@ class WordService
     }
 
     /**
-     * @param Word[] $items
+     * @param Word $word
+     * @param bool $increment
      */
-
     public function save(Word $word, $increment = true)
     {
         if ($increment) {
