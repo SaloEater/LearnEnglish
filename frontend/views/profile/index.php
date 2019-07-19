@@ -4,15 +4,21 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $user \common\entities\User */
+
 ?>
 
 <div class="left-padding">
-    <div class="display-2 ">
-       Имя пользователя <b><?= $user->username?></b>
+    <div style="display:inline-block;">
+        <?=
+        Html::img($user->image_url);
+        ?>
+    </div>
+    <div style="display:inline-block;padding-left:2rem;" class="display-2 ">
+       Добро пожаловать, <b><?= Html::a($user->username, ['edit'])?></b>!
     </div>
 </div>
 
-<div class="container">
+<div class="container" style="padding-top: 2rem">
     <p><?= Html::a('Мои тексты' , Url::to('/text/'), [
             'class' => 'btn btn-lg btn-default'
         ])?></p>

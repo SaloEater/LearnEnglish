@@ -42,7 +42,7 @@ $this->registerCssFile('css/frontend.css');
         //['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (!Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Profile', 'url' => ['/site/profile/']];
+        $menuItems[] = ['label' => 'Profile', 'url' => ['/profile/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
