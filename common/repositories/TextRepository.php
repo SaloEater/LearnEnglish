@@ -11,7 +11,7 @@ class TextRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = Text::class;
+        $this->type = new Text();
     }
 
     public function getById(int $id)

@@ -11,7 +11,7 @@ class FormsWordsRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = FormsWords::class;
+        $this->type = new FormsWords();
     }
 
     /**

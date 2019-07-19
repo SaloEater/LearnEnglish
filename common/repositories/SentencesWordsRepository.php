@@ -11,7 +11,7 @@ class SentencesWordsRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = SentencesWords::class;
+        $this->type = new SentencesWords();
     }
 
     /**

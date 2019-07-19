@@ -10,7 +10,7 @@ class WordRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = Word::class;
+        $this->type = new Word();
     }
 
 

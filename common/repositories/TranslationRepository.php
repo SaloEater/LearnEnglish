@@ -7,7 +7,7 @@ class TranslationRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = Translation::class;
+        $this->type = new Translation();
     }
 
     /**

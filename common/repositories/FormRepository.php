@@ -9,7 +9,7 @@ class FormRepository extends IRepository
 {
     public function __construct()
     {
-        $this->type = Form::class;
+        $this->type = new Form();
     }
 
     /**
