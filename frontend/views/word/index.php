@@ -1,7 +1,13 @@
 <?php
 
 /* @var $dataProvider  ActiveDataProvider*/
-/* @var $filterModel \backend\models\UsersWordsSearch*/
+/* @var $filterModel \backend\models\MegaUsersWordsSearch*/
+/*
+ * [
+                'prompt' => 'All',
+            ]
+ */
+
 use yii\data\ActiveDataProvider;
 use common\entities\UsersWords;
 use yii\helpers\ArrayHelper;
@@ -9,7 +15,7 @@ $models = $dataProvider->getModels();
 
 $countMap = ArrayHelper::map($models, 'count', 'count');
 
-$globalCountMap = ArrayHelper::map($models, 'count', 'word.count');
+$globalCountMap = ArrayHelper::map($models, 'word.count', 'word.count');
 
 ?>
 
@@ -29,10 +35,16 @@ $globalCountMap = ArrayHelper::map($models, 'count', 'word.count');
             'value' => function (UsersWords $data) {
                 return $data->status;
             },
-            'filter' => [
-                '0' => 'Не изучено',
-                '1' => 'Изучено',
-            ]
+            'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
+                'status',
+                [
+                    '0' => 'Не изучено',
+                    '1' => 'Изучено',
+                ],
+                [
+                    'prompt' => 'Все',
+                    'class' => 'form-control'
+                ]),
         ],
         [
             'label' => 'У вас',
@@ -40,13 +52,25 @@ $globalCountMap = ArrayHelper::map($models, 'count', 'word.count');
             'value' => function (UsersWords $data) {
                 return $data->count;
             },
-            'filter' => $countMap
+            'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
+                'count',
+                $countMap,
+                [
+                    'prompt' => 'Все',
+                    'class' => 'form-control'
+                ]),
         ],
         [
             'attribute' => 'word',
             'value' => 'word.count',
             'label' => 'Глобально',
-            'filter' => $globalCountMap
+            'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
+                'word',
+                $globalCountMap,
+                [
+                    'prompt' => 'Все',
+                    'class' => 'form-control'
+                ]),
         ]
     ],
 ]) ?>

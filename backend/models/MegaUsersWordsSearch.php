@@ -57,11 +57,11 @@ class MegaUsersWordsSearch extends UsersWords
         // The key is the attribute name on our "WordSearch" instance
         $dataProvider->sort->attributes['word'] = [
             // The tables are the ones our relation are configured to
-            'asc' => ['word.content' => SORT_ASC],
-            'desc' => ['word.content' => SORT_DESC],
+            'asc' => ['word.count' => SORT_ASC],
+            'desc' => ['word.count' => SORT_DESC],
         ];
 
-
+        $word_count = null;
         if (isset($params['MegaUsersWordsSearch']) && isset($params['MegaUsersWordsSearch']['word'])) {
             $word_count = $params['MegaUsersWordsSearch']['word'];
             unset($params['MegaUsersWordsSearch']['word']);
@@ -84,7 +84,9 @@ class MegaUsersWordsSearch extends UsersWords
         ]);
         // Here we search the attributes of our relations using our previously configured
         // ones in "WordSearch"
-        $query->andFilterWhere(['word.count' => $word_count]);
+        if ($word_count && $word_count != '') {
+            $query->andFilterWhere(['word.count' => $word_count]);
+        }
 
         return $dataProvider;
     }
