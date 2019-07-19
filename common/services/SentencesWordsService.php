@@ -19,6 +19,7 @@ class SentencesWordsService
     /**
      * @param int $sentence_id
      * @param int $word_id
+     * @throws \yii\web\NotFoundHttpException
      */
     public function EstablishLinkBetween(int $sentence_id, int $word_id)
     {
@@ -29,7 +30,7 @@ class SentencesWordsService
      * @param int $sentence_id
      * @param int $word_id
      * @return SentencesWords|\yii\db\ActiveRecord
-     * @throws NotFoundHttpException
+     * @throws \yii\web\NotFoundHttpException
      */
     public function getByIDs(int $sentence_id, int $word_id)
     {
@@ -61,7 +62,7 @@ class SentencesWordsService
     public function save(SentencesWords $formsWords)
     {
         if (!$formsWords->save()) {
-            throw new \RuntimeException('Form saving error');
+            throw new \RuntimeException('SentencesWords saving error');
         }
     }
 }

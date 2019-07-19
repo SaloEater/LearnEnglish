@@ -35,8 +35,10 @@ class TranslationService
     /**
      * @param string $content
      * @param string $type
+     * @param int $word_id
+     * @param $sort
      * @return Translation|\yii\db\ActiveRecord
-     * @throws NotFoundHttpException
+     * @throws \yii\web\NotFoundHttpException
      */
     public function ensureExists(string $content, string $type, int $word_id, $sort)
     {
@@ -54,7 +56,7 @@ class TranslationService
     public function save(Translation $form)
     {
         if (!$form->save()) {
-            throw new \RuntimeException('Form saving error');
+            throw new \RuntimeException('Translation saving error');
         }
     }
 }
