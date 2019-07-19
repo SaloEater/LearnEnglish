@@ -57,8 +57,8 @@ class MegaUsersWordsSearch extends UsersWords
         // The key is the attribute name on our "WordSearch" instance
         $dataProvider->sort->attributes['word'] = [
             // The tables are the ones our relation are configured to
-            'asc' => ['word.count' => SORT_ASC],
-            'desc' => ['word.count' => SORT_DESC],
+            'asc' => ['word.order' => SORT_ASC],
+            'desc' => ['word.order' => SORT_DESC],
         ];
 
         $word_count = null;
