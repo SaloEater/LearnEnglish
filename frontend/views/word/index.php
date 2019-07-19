@@ -25,10 +25,8 @@ $countMap = ArrayHelper::map($models, 'count', 'count');*/
     'columns' => [
         [
             'label' => 'Слово',
-            'value' => function (UsersWords $data) {
-                return $data->word->content;
-            },
-//            'filter' => false
+            'attribute' => 'word_content',
+            'value' => 'word.content',
         ],
         [
             'attribute' => 'status',
@@ -46,11 +44,16 @@ $countMap = ArrayHelper::map($models, 'count', 'count');*/
                         'text' => 'Все',
                         'options' => ['value'=>""]
                     ],
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ]),/*[
                 '0' => 'Не изучено',
                 '1' => 'Изучено',
             ]*/
+            'options' => [
+                'style' => [
+                    'width' => '15rem'
+                ]
+            ]
         ],
         [
             'label' => 'У вас',
@@ -58,7 +61,7 @@ $countMap = ArrayHelper::map($models, 'count', 'count');*/
             'filter' => false
         ],
         [
-            'attribute' => 'word',
+            'attribute' => 'word_order',
             'value' => 'word.order',
             'label' => 'Рейтинг глобально',
             'filter' => false

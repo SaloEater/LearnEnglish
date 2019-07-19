@@ -11,6 +11,9 @@ use yii\data\ActiveDataProvider;
 
 class MegaUsersWordsSearch extends UsersWords
 {
+    public $word_content;
+    public $word_order;
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +21,7 @@ class MegaUsersWordsSearch extends UsersWords
     {
         return [
             [['id', 'user_id', 'word_id', 'count', 'order', 'status'], 'integer'],
-            [['word'], 'safe']
+            [['word_count', 'word_order', 'word'], 'safe']
         ];
     }
 
@@ -55,17 +58,25 @@ class MegaUsersWordsSearch extends UsersWords
 
         // Important: here is how we set up the sorting
         // The key is the attribute name on our "WordSearch" instance
-        $dataProvider->sort->attributes['word'] = [
+        $dataProvider->sort->attributes['word_order'] = [
             // The tables are the ones our relation are configured to
             'asc' => ['word.order' => SORT_ASC],
             'desc' => ['word.order' => SORT_DESC],
         ];
 
-        $word_count = null;
+        // Important: here is how we set up the sorting
+        // The key is the attribute name on our "WordSearch" instance
+        $dataProvider->sort->attributes['word_content'] = [
+            // The tables are the ones our relation are configured to
+            'asc' => ['word.content' => SORT_ASC],
+            'desc' => ['word.content' => SORT_DESC],
+        ];
+
+        /*$word_count = null;
         if (isset($params['MegaUsersWordsSearch']) && isset($params['MegaUsersWordsSearch']['word'])) {
             $word_count = $params['MegaUsersWordsSearch']['word'];
             unset($params['MegaUsersWordsSearch']['word']);
-        }
+        }*/
         // No search? Then return data Provider
         if (!$this->load($params) && !$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -83,9 +94,11 @@ class MegaUsersWordsSearch extends UsersWords
         ]);
         // Here we search the attributes of our relations using our previously configured
         // ones in "WordSearch"
-        if ($word_count && $word_count != '') {
-            $query->andFilterWhere(['word.count' => $word_count]);
-        }
+        /*if ($word_count && $word_count != '') {
+
+        }*/
+        $query->andFilterWhere(['word.order' => $this->word_order]);
+        $query->andFilterWhere(['word.content' => $this->word_content]);
 
         return $dataProvider;
     }
