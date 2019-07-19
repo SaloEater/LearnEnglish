@@ -22,7 +22,7 @@ class SentenceService
     public function save(Sentence $sentence)
     {
         if (!$sentence->save()) {
-            throw new \RuntimeException('Form saving error');
+            throw new \RuntimeException('Sentence saving error');
         }
     }
 
