@@ -4,6 +4,7 @@ namespace common\services;
 
 use common\entities\Sentence;
 use common\entities\Text;
+use common\entities\UsersWords;
 
 class TextParser
 {
@@ -12,8 +13,11 @@ class TextParser
     private $translationService;
     private $wordService;
     private $formswordsService;
+    private $userswordsService;
     private $sentenceswordsService;
     private $sentenceService;
+
+    private $userID;
 
     private $log;
 
@@ -26,12 +30,15 @@ class TextParser
         $this->formswordsService = new FormsWordsService();
         $this->sentenceswordsService = new SentencesWordsService();
         $this->sentenceService = new SentenceService();
+        $this->userswordsService = new UsersWordsService();
     }
 
     public function parseTextFromModel(Text $model)
     {
+        $this->userID = $model->created_by;
         $this->parseText($model->content, $model->id);
         \Yii::$app->session->setFlash('success', $this->log);
+
     }
 
     public function parseText(string $text, int $text_id)
@@ -74,6 +81,8 @@ class TextParser
                 $this->formswordsService->EstablishLinkBetween($form->id, $word->id);
                 $this->sentenceswordsService->EstablishLinkBetween($sentence_id, $word->id);
                 $this->wordService->save($word);
+                $usersWords = $this->userswordsService->getLink($this->userID, $word->id);
+                $this->userswordsService->save($usersWords);
 
 
                 foreach ($common as $sort => $description) {
