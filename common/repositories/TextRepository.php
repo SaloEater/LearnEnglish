@@ -16,9 +16,7 @@ class TextRepository extends IRepository
 
     public function getById(int $id)
     {
-        if (!($text = $this->getBy(['id' => $id]))) {
-            throw new NotFoundHttpException("Text isn't found");
-        }
+        $text = $this->getBy(['id' => $id]);
         return $text;
     }
 }

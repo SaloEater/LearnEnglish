@@ -13,7 +13,6 @@ class WordRepository extends IRepository
         $this->type = new Word();
     }
 
-
     /**
      * @param string $content
      * @return \yii\db\ActiveRecord
@@ -21,11 +20,9 @@ class WordRepository extends IRepository
      */
     public function getByContent(string $content)
     {
-        if (!$form = $this->getBy([
+        $form = $this->getBy([
             'content' => $content
-        ])) {
-            throw new NotFoundHttpException('Form is not found');
-        }
+        ]);
 
         return $form;
     }

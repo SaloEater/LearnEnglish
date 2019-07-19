@@ -12,6 +12,4 @@ class SentenceRepository extends IRepository
     {
         $this->type = new Sentence();
     }
-
-
 }

@@ -19,11 +19,9 @@ class FormRepository extends IRepository
      */
     public function getByContent(string $content)
     {
-        if (!$form = $this->getBy([
+        $form = $this->getBy([
             'content' => $content
-        ])) {
-            throw new NotFoundHttpException('Form is not found');
-        }
+        ]);
 
         return $form;
     }

@@ -18,13 +18,11 @@ class TranslationRepository extends IRepository
      */
     public function getByTrAndTypeForWord(string $content, string $type, int $word_id)
     {
-        if (!$form = $this->getBy([
+        $form = $this->getBy([
             'content' => $content,
             'type' => $type,
             'word_id' => $word_id
-        ])) {
-            throw new NotFoundHttpException('Translation is not found');
-        }
+        ]);
 
         return $form;
     }
