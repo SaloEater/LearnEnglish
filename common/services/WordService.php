@@ -56,10 +56,8 @@ class WordService
         }
         if ($word->order) {
             $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`<' . $word->order . ' AND ' . '`order`>' . $beforeUS);
-//                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS . 'AND' . 'order <  ' . $word->order);
             $b->execute();
         } else {
-//                $b = \Yii::$app->db->createCommand()->update(Word::tableName(), ['order' => 'order+1'], 'order > ' . $beforeUS);
             $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`>' . $beforeUS);
             $b->execute();
         }
