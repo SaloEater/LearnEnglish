@@ -7,14 +7,15 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="left-padding">
-    <div style="display:inline-block;">
-        <?=
-        Html::img($user->image_url);
-        ?>
-    </div>
-    <div style="display:inline-block;padding-left:2rem;" class="display-2 ">
-       Добро пожаловать, <b><?= Html::a($user->username, ['edit'])?></b>!
+<div class="float-left">
+    <?= Html::img($user->image_url); ?>
+    <div class=" pt-1">
+
+        <?= $user->username ?>
+
+       <?= Html::a('Ваш профиль' , Url::to('edit'), [
+           'class' => 'btn btn-lg btn-default btn-block display-4'
+       ])?>
     </div>
 </div>
 

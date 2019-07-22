@@ -9,8 +9,7 @@ $this->title = 'My Yii Application';
 ?>
 
 <div class="mx-auto border-primary rounded">
-    <div class="d-flex justify-content-between flex-row">
-        <?= \common\widgets\PopularWordsList::widget() ?>
+    <div class="d-flex justify-content-around flex-row">
         <?= \common\widgets\PopularWordsList::widget() ?>
     </div>
 </div>
