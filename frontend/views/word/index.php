@@ -3,7 +3,6 @@
 /* @var $this \yii\web\View*/
 /* @var $dataProvider  ActiveDataProvider*/
 /* @var $filterModel \backend\models\MegaUsersWordsSearch*/
-/* @var $preparedURl string*/
 
 use common\entities\UsersWords;
 use yii\data\ActiveDataProvider;
@@ -13,9 +12,9 @@ $view = $this;
 
 <?php
 
-//\yii\widgets\Pjax::begin([
-//    'enablePushState' => false
-//]);
+\yii\widgets\Pjax::begin([
+    'enablePushState' => false
+]);
 
 ?>
 
@@ -30,14 +29,11 @@ $view = $this;
         ],
         [
             'attribute' => 'status',
-            'value' => function (UsersWords $data) use ($preparedURl, $view)  {
-                //return $data->status;
+            'value' => function (UsersWords $data) use ($view)  {
 //                return \yii\helpers\Html::a(\lo\widgets\Toggle::widget(['name' => 'status', 'checked' => (bool)$data->status]), ['', 'id'=>$data->id]);
-//                return \yii\helpers\Html::a('Изменить', $data->id, ['class' => 'btn btn-small '.(((bool)$data->status)?'btn-success':'btn-danger')]);
                 return $view->render('wordStatusAjaxElement', [
-                    'entity' => $data,
-                    'preparedURl' => $preparedURl,
-                    'view' => $view
+                    'id' => $data->id,
+                    'status' => (bool)$data->status
                 ]);
             },
             'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
@@ -76,6 +72,6 @@ $view = $this;
 
 <?php
 
-//\yii\widgets\Pjax::end();
+\yii\widgets\Pjax::end();
 
 ?>
