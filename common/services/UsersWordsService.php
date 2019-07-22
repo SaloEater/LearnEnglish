@@ -6,16 +6,9 @@ namespace common\services;
 
 use common\entities\UsersWords;
 use common\entities\Word;
-use common\repositories\UsersWordsRepository;
 
-class UsersWordsService
+class UsersWordsService extends WordUsersWordsService
 {
-    private $userswords;
-
-    public function __construct()
-    {
-        $this->userswords = new usersWordsRepository();
-    }
 
     /**
      * @param int $user_id
@@ -64,24 +57,7 @@ class UsersWordsService
 
     public function setOrder(UsersWords $usersWords)
     {
-        $count = $usersWords->count;
-        $beforeUS = $this->userswords->countLinksBeforeUs($count);
-        $items = $this->userswords->countLinksOnLevel($count);
-        foreach ($items as $item) {
-            $wordContent = ($usersWords->word->content);
-            $gotWordContent = (Word::findOne($item['word_id']))->content;
-            if ((strcmp($wordContent, $gotWordContent)) == 1) {
-                $beforeUS++;
-            }
-        }
-        if ($usersWords->order) {
-            $b = \Yii::$app->db->createCommand('UPDATE `users_words` SET `order`=`order`+1 WHERE `order`<' . $usersWords->order . ' AND ' . '`order`>' . $beforeUS);
-            $b->execute();
-        } else {
-            $b = \Yii::$app->db->createCommand('UPDATE `users_words` SET `order`=`order`+1 WHERE `order`>' . $beforeUS);
-            $b->execute();
-        }
-        $usersWords->order = $beforeUS+1;
+        $usersWords = $this->order($usersWords, "userswords");
         return $usersWords;
     }
 }

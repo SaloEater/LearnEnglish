@@ -27,7 +27,7 @@ class WordRepository extends IRepository
         return $form;
     }
 
-    public function countWordsBeforeUs($count)
+    public function countItemsBeforeUs($count)
     {
         return (new Query())
             ->from('word')
@@ -35,12 +35,24 @@ class WordRepository extends IRepository
             ->count();
     }
 
-    public function countWordsOnLevel($count)
+    public function countItemsOnLevel($count)
     {
         return (new Query())
             ->select('*')
             ->from('word')
             ->where(['count' => $count])
             ->all();
+    }
+
+    public function updateOrders(int $beforeUs, $order = false)
+    {
+        if ($order) {
+            $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`<' . $order . ' AND ' . '`order`>' . $beforeUs);
+            $result = $b->execute();
+        } else {
+            $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`>' . $beforeUs);
+            $result = $b->execute();
+        }
+        return $result;
     }
 }

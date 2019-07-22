@@ -33,7 +33,7 @@ class UsersWordsRepository extends IRepository
         return $uw;
     }
 
-    public function countLinksBeforeUs($count)
+    public function countItemsBeforeUs($count)
     {
         return (new Query())
             ->from('users_words')
@@ -41,12 +41,24 @@ class UsersWordsRepository extends IRepository
             ->count();
     }
 
-    public function countLinksOnLevel($count)
+    public function countItemsOnLevel($count)
     {
         return (new Query())
             ->select('*')
             ->from('users_words')
             ->where(['count' => $count])
             ->all();
+    }
+
+    public function updateOrders(int $beforeUs, $order = false)
+    {
+        if ($order) {
+            $b = \Yii::$app->db->createCommand('UPDATE `users_words` SET `order`=`order`+1 WHERE `order`<' . $order . ' AND ' . '`order`>' . $beforeUs);
+            $result = $b->execute();
+        } else {
+            $b = \Yii::$app->db->createCommand('UPDATE `users_words` SET `order`=`order`+1 WHERE `order`>' . $beforeUs);
+            $result = $b->execute();
+        }
+        return $result;
     }
 }

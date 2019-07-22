@@ -3,18 +3,10 @@
 namespace common\services;
 
 use common\entities\Word;
-use common\repositories\WordRepository;
 use yii\web\NotFoundHttpException;
-use \yii\db\Query;
 
-class WordService
+class WordService extends WordUsersWordsService
 {
-    private $words;
-
-    public function __construct()
-    {
-        $this->words = new WordRepository();
-    }
 
     /**
      * @param string $content
@@ -45,23 +37,7 @@ class WordService
 
     public function setOrder(Word $word)
     {
-        $count = $word->count;
-        $beforeUS = $this->words->countWordsBeforeUs($count);
-        $items = $this->words->countWordsOnLevel($count);
-        foreach ($items as $item) {
-            $wordContent = $word->content;
-            if ((strcmp($wordContent, $item['content'])) == 1) {
-                $beforeUS++;
-            }
-        }
-        if ($word->order) {
-            $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`<' . $word->order . ' AND ' . '`order`>' . $beforeUS);
-            $b->execute();
-        } else {
-            $b = \Yii::$app->db->createCommand('UPDATE `word` SET `order`=`order`+1 WHERE `order`>' . $beforeUS);
-            $b->execute();
-        }
-        $word->order = $beforeUS+1;
+        $word = $this->order($word, "words");
         return $word;
     }
 
