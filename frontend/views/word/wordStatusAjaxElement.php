@@ -6,8 +6,10 @@
  * Time: 9:18
  */
 
-/* @var $entity \common\entities\UsersWords*/
-/* @var $preparedURl string*/
+use common\widgets\WordStatusWidget;
+
+/* @var $id int */
+/* @var $status bool*/
 /* @var $view \yii\web\View */
 
 \yii\widgets\Pjax::begin([
@@ -15,11 +17,16 @@
     'submitEvent' => 'click'
 ]);
 
-echo $view->render('_wordStatusForm', [
+echo WordStatusWidget::widget([
+    'id' => $id,
+    'status' => $status
+]);
+
+/*echo $view->render('_wordStatusForm', [
    'entity' => $entity,
    'preparedURl' => $preparedURl,
     'view' => $view
-]);
+]);*/
 
 \yii\widgets\Pjax::end();
 

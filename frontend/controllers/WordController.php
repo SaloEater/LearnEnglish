@@ -8,6 +8,7 @@ use common\services\UsersWordsService;
 use common\widgets\WordStatusWidget;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
 
@@ -23,10 +24,20 @@ class WordController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => ['status'],
+                        'allow' => true
+                    ],
+                    [
                         'actions' => ['index', 'changestatus'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'status' => ['post'],
                 ],
             ],
         ];
@@ -48,11 +59,11 @@ class WordController extends Controller
         ];
     }
 
-    public function actionIndex($id = null)
+    public function actionIndex()
     {
         $queryParams = Yii::$app->request->queryParams;
 
-        $preparedURl = Url::to('/word/index') . '?';
+        /*$preparedURl = Url::to('/word/index') . '?';
 
         if (isset($queryParams['MegaUsersWordsSearch'])) {
             foreach ($queryParams['MegaUsersWordsSearch'] as $param=>$value) {
@@ -62,54 +73,42 @@ class WordController extends Controller
 
         if (isset($queryParams['sort'])) {
             $preparedURl .= 'sort=' . $queryParams['sort'];
-        }
-
-        /*
-         * $preparedURl = Url::to('');
-         *
-         * if (strpos($preparedURl, '?')) {
-            if (($idParamIndex = strpos($preparedURl, 'id'))) {
-                $buffer = substr($preparedURl, 0, $idParamIndex);
-                $buffer = trim($buffer, '&');
-                if (($nextParamPos = strpos($preparedURl, '&', $idParamIndex))) {
-                    $buffer .= substr($preparedURl, $nextParamPos, strlen($preparedURl)+1);
-                }
-                $preparedURl = $buffer;
-                unset($_GET['id']);
-            }
-            if (($idParamIndex = strpos($preparedURl, 'pjax'))) {
-                $buffer = substr($preparedURl, 0, $idParamIndex);
-                $buffer = trim($buffer, '&');
-                if (($nextParamPos = strpos($preparedURl, '&', $idParamIndex))) {
-                    $buffer .= substr($preparedURl, $nextParamPos, strlen($preparedURl)+1);
-                }
-                $preparedURl = $buffer;
-                unset($_GET['id']);
-            }
-        } else {
-            $preparedURl.= '?';
         }*/
-        if (Yii::$app->request->isAjax && isset(Yii::$app->request->post()['UsersWords'])) {
+
+        //
+        /*if (Yii::$app->request->isAjax && isset(Yii::$app->request->post()['UsersWords'])) {
             $id = Yii::$app->request->post()['UsersWords']['id'];
             $entity = (new UsersWordsService())->changeStatus($id);
+
+
+
             $lol = $this->renderAjax('_wordStatusForm',[
                 'entity' => $entity,
                 'preparedURl' => $preparedURl
-            ]);/*WordStatusWidget::widget([
-                'entity' => $entity,
-                'preparedURl' => $preparedURl
-            ]);*/
+            ]);
             return $lol;
-        }
+        }*/
         $filterModel = new MegaUsersWordsSearch();
 
         $dataProvider = $filterModel->search($queryParams);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'filterModel'=> $filterModel,
-            'preparedURl' => $preparedURl,
+            'filterModel' => $filterModel,
+            'dataProvider' => $dataProvider
         ]);
+    }
+
+    public function actionStatus()
+    {
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $id = $data['id'];
+            $entity = (new UsersWordsService())->changeStatus($id);
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return [
+                'known' => $entity->status,
+            ];
+        }
     }
 
 }
