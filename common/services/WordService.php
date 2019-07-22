@@ -17,6 +17,17 @@ class WordService
     }
 
     /**
+     * @param int $top
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTopWords(int $top = 10)
+    {
+        $query = Word::find()->where(['<=', 'order', $top]);
+
+        return $query;
+    }
+
+    /**
      * @param string $content
      * @return Word
      */
