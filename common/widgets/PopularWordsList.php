@@ -14,17 +14,20 @@ class PopularWordsList extends Widget
 
     public function run()
     {
-        $output = "<div class='w-25 d-inline-block'>";
+        $output = "<div class='w-25'>";
         $output .= "<h3 class='text-center '>Популярные слова</h3>";
-        $output .= "<ul class='list-group'>";
+        $output .= "<table class='table'>";
+        $output .= "<thead><tr><th scope='col'>Топ</th><th scope='col'>Слово</th></tr></thead><tbody>";
 
         $topWords = (new WordService())->getTopWords();
 
+        $i = 1;
         foreach($topWords->all() as $item) {
-            $output .= "<li class='list-group-item'>" . $item->content . "</li>";
+            $output .= '<tr><th scope="row" class="text-right" style="width: 2rem">'.$i++.'</th><td>'.$item->content.'</td></tr>';
         }
 
-        $output .= "</ul>";
+        $output .= "</tbody>";
+        $output .= "</table>";
         $output .= "</div>";
         return $output;
     }
