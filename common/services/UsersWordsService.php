@@ -14,14 +14,22 @@ class UsersWordsService
 
     public function __construct()
     {
-        $this->userswords = new usersWordsRepository();
+        $this->userswords = new UsersWordsRepository();
+    }
+
+    public function changeStatus($id)
+    {
+        $item = $this->userswords->getById($id);
+        $item->status = (int)!(bool)$item->status;
+        $this->save($item, false);
+        return $item;
     }
 
     /**
      * @param int $user_id
      * @param int $word_id
-     * @return usersWords|\yii\db\ActiveRecord
-     * @throws NotFoundHttpException
+     * @return UsersWords|\yii\db\ActiveRecord
+     * @throws \yii\web\NotFoundHttpException
      */
     public function getLink(int $user_id, int $word_id)
     {

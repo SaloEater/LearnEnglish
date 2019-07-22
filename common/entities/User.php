@@ -51,6 +51,8 @@ class User extends ActiveRecord implements IdentityInterface
         if (!$this->isWait()) {
             throw new \DomainException('Email is already confirmed.');
         }
+
+        $this->image_url = '/images/defaultAvatar.png';
         $this->status = self::STATUS_ACTIVE;
 //        $this->removeEmailVerificationToken();
     }

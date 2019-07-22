@@ -1,21 +1,21 @@
 <?php
 
+/* @var $this \yii\web\View*/
 /* @var $dataProvider  ActiveDataProvider*/
 /* @var $filterModel \backend\models\MegaUsersWordsSearch*/
-/*
- * [
-                'prompt' => 'All',
-            ]
- */
+/* @var $preparedURl string*/
 
-use yii\data\ActiveDataProvider;
 use common\entities\UsersWords;
-use yii\helpers\ArrayHelper;
-$models = $dataProvider->getModels();
+use yii\data\ActiveDataProvider;
 
+$view = $this;
+?>
 
-/*$globalCountMap = ArrayHelper::map($models, 'word.count', 'word.count');
-$countMap = ArrayHelper::map($models, 'count', 'count');*/
+<?php
+
+\yii\widgets\Pjax::begin([
+    'enablePushState' => false
+]);
 
 ?>
 
@@ -30,8 +30,14 @@ $countMap = ArrayHelper::map($models, 'count', 'count');*/
         ],
         [
             'attribute' => 'status',
-            'value' => function (UsersWords $data) {
-                return $data->status;
+            'value' => function (UsersWords $data) use ($preparedURl, $view)  {
+                //return $data->status;
+//                return \yii\helpers\Html::a(\lo\widgets\Toggle::widget(['name' => 'status', 'checked' => (bool)$data->status]), ['', 'id'=>$data->id]);
+//                return \yii\helpers\Html::a('Изменить', $data->id, ['class' => 'btn btn-small '.(((bool)$data->status)?'btn-success':'btn-danger')]);
+                return $view->render('_wordStatusButton', [
+                    'entity' => $data,
+                    'preparedURl' => $preparedURl
+                ]);
             },
             'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
                 'status',
@@ -53,7 +59,8 @@ $countMap = ArrayHelper::map($models, 'count', 'count');*/
                 'style' => [
                     'width' => '15rem'
                 ]
-            ]
+            ],
+            'format' => 'raw'
         ],
         [
             'label' => 'У вас',
@@ -68,3 +75,9 @@ $countMap = ArrayHelper::map($models, 'count', 'count');*/
         ]
     ],
 ]) ?>
+
+<?php
+
+\yii\widgets\Pjax::end();
+
+?>

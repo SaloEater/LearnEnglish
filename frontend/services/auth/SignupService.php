@@ -62,8 +62,6 @@ class SignupService
 
         $user->confirmSignup();
 
-        $user->image_url = '/images/defaultAvatar.png';
-
         $this->users->save($user);
     }
 
