@@ -1,23 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tom
- * Date: 22.07.2019
- * Time: 9:18
- */
 
 /* @var $entity \common\entities\UsersWords*/
 /* @var $preparedURl string*/
 
-\yii\widgets\Pjax::begin([
-    'enablePushState' => false,
-    'submitEvent' => 'click'
-]);
-\yii\widgets\ActiveForm::begin([
+$form = \yii\widgets\ActiveForm::begin([
     'options' => [
         'data-pjax' => true,
     ],
 ]);
+
+echo $form->field($entity, 'id')->hiddenInput(['value' => $entity->id])->label(false);
 
 echo \common\widgets\WordStatusWidget::widget([
     'entity' => $entity,
@@ -26,7 +18,4 @@ echo \common\widgets\WordStatusWidget::widget([
 
 \yii\widgets\ActiveForm::end();
 
-\yii\widgets\Pjax::end();
-
 ?>
-
