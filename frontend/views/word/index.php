@@ -13,9 +13,9 @@ $view = $this;
 
 <?php
 
-\yii\widgets\Pjax::begin([
-    'enablePushState' => false
-]);
+//\yii\widgets\Pjax::begin([
+//    'enablePushState' => false
+//]);
 
 ?>
 
@@ -34,9 +34,10 @@ $view = $this;
                 //return $data->status;
 //                return \yii\helpers\Html::a(\lo\widgets\Toggle::widget(['name' => 'status', 'checked' => (bool)$data->status]), ['', 'id'=>$data->id]);
 //                return \yii\helpers\Html::a('Изменить', $data->id, ['class' => 'btn btn-small '.(((bool)$data->status)?'btn-success':'btn-danger')]);
-                return $view->render('_wordStatusButton', [
+                return $view->render('wordStatusAjaxElement', [
                     'entity' => $data,
-                    'preparedURl' => $preparedURl
+                    'preparedURl' => $preparedURl,
+                    'view' => $view
                 ]);
             },
             'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
@@ -51,10 +52,7 @@ $view = $this;
                         'options' => ['value'=>""]
                     ],
                     'class' => 'form-control',
-                ]),/*[
-                '0' => 'Не изучено',
-                '1' => 'Изучено',
-            ]*/
+                ]),
             'options' => [
                 'style' => [
                     'width' => '15rem'
@@ -78,6 +76,6 @@ $view = $this;
 
 <?php
 
-\yii\widgets\Pjax::end();
+//\yii\widgets\Pjax::end();
 
 ?>

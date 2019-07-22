@@ -89,14 +89,16 @@ class WordController extends Controller
         } else {
             $preparedURl.= '?';
         }*/
-
-        die(print_r(Yii::$app->request));
-        if (Yii::$app->request->isAjax) {
-            $entity = (new UsersWordsService())->changeStatus(Yii::$app->request->post());
-            $lol = WordStatusWidget::widget([
+        if (Yii::$app->request->isAjax && isset(Yii::$app->request->post()['UsersWords'])) {
+            $id = Yii::$app->request->post()['UsersWords']['id'];
+            $entity = (new UsersWordsService())->changeStatus($id);
+            $lol = $this->renderAjax('_wordStatusForm',[
                 'entity' => $entity,
                 'preparedURl' => $preparedURl
-            ]);
+            ]);/*WordStatusWidget::widget([
+                'entity' => $entity,
+                'preparedURl' => $preparedURl
+            ]);*/
             return $lol;
         }
         $filterModel = new MegaUsersWordsSearch();
