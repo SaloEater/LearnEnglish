@@ -3,8 +3,19 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+
+\yii\bootstrap\BootstrapAsset::register($this);
+
 ?>
-<div class="site-index">
+
+<div class="mx-auto border-primary rounded">
+    <div class="d-flex justify-content-between flex-row">
+        <?= \common\widgets\PopularWordsList::widget() ?>
+        <?= \common\widgets\PopularWordsList::widget() ?>
+    </div>
+</div>
+
+<!--<div class="site-index">
 
     <div class="jumbotron">
         <h1>Congratulations!</h1>
@@ -50,4 +61,4 @@ $this->title = 'My Yii Application';
         </div>
 
     </div>
-</div>
+</div>-->
