@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2b08c0189a946bca47bdaa8d9c62673",
+    "content-hash": "53fd1406305a0aad91b5c55ff7642ba8",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -25,6 +25,27 @@
             "type": "bower-asset",
             "license": [
                 "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/fancybox",
+            "version": "v3.5.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fancyapps/fancybox.git",
+                "reference": "b507d317a95b70a0b1be7209d528c4dba3ee0dd0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fancyapps/fancybox/zipball/b507d317a95b70a0b1be7209d528c4dba3ee0dd0",
+                "reference": "b507d317a95b70a0b1be7209d528c4dba3ee0dd0"
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.9.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "GPL-3.0"
             ]
         },
         {
@@ -163,6 +184,41 @@
             "time": "2018-03-26T11:24:36+00:00"
         },
         {
+            "name": "components/font-awesome",
+            "version": "5.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/font-awesome.git",
+                "reference": "18619364d77677cec103934b1aee6d4f45407d1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/font-awesome/zipball/18619364d77677cec103934b1aee6d4f45407d1a",
+                "reference": "18619364d77677cec103934b1aee6d4f45407d1a",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "styles": [
+                        "css/fontawesome-all.css"
+                    ],
+                    "files": [
+                        "css/fontawesome-all.min.css",
+                        "webfonts/*"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-4.0",
+                "MIT",
+                "OFL-1.1"
+            ],
+            "description": "Font Awesome, the iconic SVG, font, and CSS framework.",
+            "time": "2018-02-11T17:32:00+00:00"
+        },
+        {
             "name": "doctrine/lexer",
             "version": "1.0.2",
             "source": {
@@ -224,16 +280,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.9",
+            "version": "2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "128cc721d771ec2c46ce59698f4ca42b73f71b25"
+                "reference": "a6c8d7101b19a451c1707b1b79bbbc56e4bdb7ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/128cc721d771ec2c46ce59698f4ca42b73f71b25",
-                "reference": "128cc721d771ec2c46ce59698f4ca42b73f71b25",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/a6c8d7101b19a451c1707b1b79bbbc56e4bdb7ec",
+                "reference": "a6c8d7101b19a451c1707b1b79bbbc56e4bdb7ec",
                 "shasum": ""
             },
             "require": {
@@ -243,7 +299,8 @@
             "require-dev": {
                 "dominicsayers/isemail": "dev-master",
                 "phpunit/phpunit": "^4.8.35||^5.7||^6.0",
-                "satooshi/php-coveralls": "^1.0.1"
+                "satooshi/php-coveralls": "^1.0.1",
+                "symfony/phpunit-bridge": "^4.4@dev"
             },
             "suggest": {
                 "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
@@ -277,7 +334,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-06-23T10:14:27+00:00"
+            "time": "2019-07-19T20:52:08+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -325,6 +382,50 @@
                 "html"
             ],
             "time": "2019-07-14T18:58:38+00:00"
+        },
+        {
+            "name": "grozzzny/depends",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/grozzzny/depends.git",
+                "reference": "eb6b8e3e17847d533d21df0de06eae3416ca43e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/grozzzny/depends/zipball/eb6b8e3e17847d533d21df0de06eae3416ca43e0",
+                "reference": "eb6b8e3e17847d533d21df0de06eae3416ca43e0",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/fancybox": "*",
+                "components/font-awesome": "5.0.6",
+                "php": ">=5.6.0",
+                "twbs/bootstrap": "4.1.1"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "grozzzny\\depends\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitriy Groznyy",
+                    "email": "grozzzny@gmail.com",
+                    "homepage": "http://pr-kenig.ru"
+                }
+            ],
+            "description": "Depends for Yii2",
+            "keywords": [
+                "depends",
+                "yii"
+            ],
+            "time": "2018-12-14T16:14:56+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -622,6 +723,57 @@
                 "shim"
             ],
             "time": "2019-02-06T07:57:58+00:00"
+        },
+        {
+            "name": "twbs/bootstrap",
+            "version": "v4.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/bootstrap.git",
+                "reference": "779ad9f174ea5ab7e755f6df0ec9e5912d67dd16"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/779ad9f174ea5ab7e755f6df0ec9e5912d67dd16",
+                "reference": "779ad9f174ea5ab7e755f6df0ec9e5912d67dd16",
+                "shasum": ""
+            },
+            "replace": {
+                "twitter/bootstrap": "self.version"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
+                },
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
+                }
+            ],
+            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+            "homepage": "https://getbootstrap.com/",
+            "keywords": [
+                "JS",
+                "css",
+                "framework",
+                "front-end",
+                "mobile-first",
+                "responsive",
+                "sass",
+                "web"
+            ],
+            "time": "2018-04-30T16:04:33+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -1001,6 +1153,24 @@
                 "parser"
             ],
             "time": "2019-01-16T14:22:17+00:00"
+        },
+        {
+            "name": "bower-asset/bootstrap-toggle",
+            "version": "2.2.2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:minhur/bootstrap-toggle.git",
+                "reference": "187e332b7431afe3d0c07eeef92782ce59a77d66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/minhur/bootstrap-toggle/zipball/187e332b7431afe3d0c07eeef92782ce59a77d66",
+                "reference": "187e332b7431afe3d0c07eeef92782ce59a77d66"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "codeception/assert-throws",
@@ -1420,6 +1590,52 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "loveorigami/yii2-bootstrap-toggle",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/loveorigami/yii2-bootstrap-toggle.git",
+                "reference": "27ee6469f784b9163c03ee760e34c7ef751be148"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/loveorigami/yii2-bootstrap-toggle/zipball/27ee6469f784b9163c03ee760e34c7ef751be148",
+                "reference": "27ee6469f784b9163c03ee760e34c7ef751be148",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap-toggle": "*",
+                "yiisoft/yii2": "2.0.*"
+            },
+            "require-dev": {
+                "yiisoft/yii2-debug": "2.0.*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "lo\\widgets\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Lukyanov",
+                    "email": "loveorigami@mail.ru"
+                }
+            ],
+            "description": "Yii2 bootstrap-toggle widget",
+            "keywords": [
+                "bootstrap",
+                "toggle",
+                "widget",
+                "yii2"
+            ],
+            "time": "2016-05-12T15:57:40+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3820,7 +4036,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "grozzzny/depends": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -2,11 +2,17 @@
 
 namespace frontend\tests\unit\models;
 
+use Codeception\AssertThrows;
+use common\entities\User;
 use common\fixtures\UserFixture;
+use common\repositories\NotFoundException;
+use common\repositories\UserRepository;
 use frontend\forms\VerifyEmailForm;
+use frontend\services\auth\SignupService;
 
 class VerifyEmailFormTest extends \Codeception\Test\Unit
 {
+    use AssertThrows;
     /**
      * @var \frontend\tests\UnitTester
      */
@@ -25,26 +31,31 @@ class VerifyEmailFormTest extends \Codeception\Test\Unit
 
     public function testVerifyWrongToken()
     {
-        $this->tester->expectException('\yii\base\InvalidArgumentException', function() {
-            new VerifyEmailForm('');
+        $this->assertThrows(NotFoundException::class, function() {
+            (new SignupService())->confirm('');
         });
 
-        $this->tester->expectException('\yii\base\InvalidArgumentException', function() {
-            new VerifyEmailForm('notexistingtoken_1391882543');
+        $this->assertThrows(NotFoundException::class, function() {
+            (new SignupService())->confirm('notexistingtoken_1391882543');
         });
     }
 
     public function testAlreadyActivatedToken()
     {
-        $this->tester->expectException('\yii\base\InvalidArgumentException', function() {
-            new VerifyEmailForm('already_used_token_1548675330');
+        $this->tester->expectException(\DomainException::class, function() {
+            (new SignupService())->confirm('already_used_token_1548675330');
         });
     }
 
     public function testVerifyCorrectToken()
     {
-        $model = new VerifyEmailForm('4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330');
-        $user = $model->verifyEmail();
+        $fix = $this->tester->grabFixture('user', 2);
+        $form = new VerifyEmailForm(['token' => $fix->verification_token]);
+
+        $this->assertNotThrows(\DomainException::class, function() use ($form) {
+            (new SignupService())->confirm($form->token);
+        });
+        $user = (new UserRepository())->getByUsername($fix->username);
         expect($user)->isInstanceOf('common\entities\User');
 
         expect($user->username)->equals('test.test');

@@ -3,6 +3,7 @@
 namespace frontend\services\auth;
 
 use common\entities\User;
+use common\repositories\NotFoundException;
 use common\repositories\UserRepository;
 use frontend\forms\ResendVerificationEmailForm;
 use http\Exception\RuntimeException;
@@ -47,7 +48,9 @@ class SignupService
             throw new \DomainException('Verify email token cannot be blank.');
         }
 
-        if (!$this->users->existsByVerificationToken($token)) {
+        try {
+            $this->users->existsByVerificationToken($token);
+        } catch (NotFoundException $e) {
             throw new \DomainException('Wrong verify email token.');
         }
     }

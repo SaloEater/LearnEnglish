@@ -12,10 +12,10 @@ class WordUsersWordsService
     protected $userswords;
     protected $words;
 
-    public function __construct ()
+    public function __construct (UsersWordsRepository $userswords, WordRepository $words)
     {
-        $this->userswords = new UsersWordsRepository();
-        $this->words = new WordRepository();
+        $this->userswords = $userswords;
+        $this->words = $words;
     }
 
     public function order($model, string $repository)

@@ -21,6 +21,7 @@ use yii\web\IdentityInterface;
  * @property int $created_at
  * @property int $updated_at
  * @property string $verification_token
+ * @property string $image_url
  *
  * @property Text[] $texts
  * @property Text[] $textsUpdated
@@ -48,10 +49,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function confirmSignup()
     {
         if (!$this->isWait()) {
-            throw new \DomainException('User is already active');
+            throw new \DomainException('Email is already confirmed.');
         }
+
+        $this->image_url = '/images/defaultAvatar.png';
         $this->status = self::STATUS_ACTIVE;
-        $this->removeEmailVerificationToken();
+//        $this->removeEmailVerificationToken();
     }
 
     public function removeEmailVerificationToken()
@@ -95,6 +98,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_WAIT]],
+            ['image_url', 'safe']
         ];
     }
 
