@@ -9,9 +9,9 @@ class FormService
 {
     private $services;
 
-    public function __construct()
+    public function __construct(FormRepository $services)
     {
-        $this->services = new FormRepository();
+        $this->services = $services;
     }
 
     /**

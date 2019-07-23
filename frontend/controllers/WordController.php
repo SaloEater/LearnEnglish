@@ -14,6 +14,16 @@ use yii\web\Controller;
 
 class WordController extends Controller
 {
+    private $userswordsService;
+
+    public function __construct($id, $module,
+                                UsersWordsService $userswordsService,
+                                $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->userswordsService = $userswordsService;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -103,7 +113,7 @@ class WordController extends Controller
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
             $id = $data['id'];
-            $entity = (new UsersWordsService())->changeStatus($id);
+            $entity = $this->userswordsService->changeStatus($id);
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return [
                 'known' => $entity->status,
