@@ -5,6 +5,7 @@ namespace common\services;
 use common\repositories\UsersWordsRepository;
 use common\repositories\WordRepository;
 use common\entities\Word;
+use yii\base\InvalidArgumentException;
 
 class WordUsersWordsService
 {
@@ -37,7 +38,7 @@ class WordUsersWordsService
                     $beforeUs++;
                 }
             }
-        } else return false;
+        } else throw new InvalidArgumentException();
         $this->{$repository}->updateOrders($beforeUs, $model->order);
         $model->order = $beforeUs+1;
         return $model;
