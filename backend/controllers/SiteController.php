@@ -15,6 +15,17 @@ use yii\web\Controller;
 class SiteController extends Controller
 {
     /**
+     * @var $authService AuthService
+     */
+    private $authService;
+
+    public function __construct($id, $module, AuthService $authService, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->authService = $authService;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function behaviors()
@@ -79,7 +90,7 @@ class SiteController extends Controller
         $form = new LoginForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $user = (new AuthService())->auth($form);
+                $user = $this->authService->auth($form);
                 Yii::$app->user->login($user, $form->rememberMe ? 3600 * 24 * 30 : 0);
                 return $this->goBack();
             } catch (DomainException $e) {

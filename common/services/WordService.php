@@ -11,9 +11,9 @@ class WordService
 {
     private $words;
 
-    public function __construct()
+    public function __construct(WordRepository $words)
     {
-        $this->words = new WordRepository();
+        $this->words = $words;
     }
 
     /**

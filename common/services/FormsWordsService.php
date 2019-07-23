@@ -11,9 +11,9 @@ class FormsWordsService
 {
     private $formswords;
 
-    public function __construct()
+    public function __construct(FormsWordsRepository $formswords)
     {
-        $this->formswords = new FormsWordsRepository();
+        $this->formswords = $formswords;
     }
 
     /**

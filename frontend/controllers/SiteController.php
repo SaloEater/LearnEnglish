@@ -27,6 +27,25 @@ use DomainException;
  */
 class SiteController extends Controller
 {
+    private $authService;
+    private $contactService;
+    private $signUpService;
+    private $passwordResetService;
+
+    public function __construct($id, $module,
+                                AuthService $authService,
+                                ContactService $contactService,
+                                SignupService $signUpService,
+                                PasswordResetService $passwordResetService,
+                                $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->authService = $authService;
+        $this->contactService = $contactService;
+        $this->signUpService = $signUpService;
+        $this->passwordResetService = $passwordResetService;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -97,7 +116,7 @@ class SiteController extends Controller
         $form = new LoginForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $user = (new AuthService())->auth($form);
+                $user = $this->authService->auth($form);
                 Yii::$app->user->login($user, $form->rememberMe ? 3600 * 24 * 30 : 0);
                 return $this->goBack();
             } catch (DomainException $e) {
@@ -135,7 +154,7 @@ class SiteController extends Controller
     {
         $form = new ContactForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            (new ContactService())->sendEmail($form);
+            $this->contactService->sendEmail($form);
             Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
             return $this->refresh();
         } else {
@@ -164,7 +183,7 @@ class SiteController extends Controller
     {
         $form = new SignupForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            (new SignupService())->signup($form);
+            $this->signUpService->signup($form);
             Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
             return $this->goHome();
         }
@@ -184,7 +203,7 @@ class SiteController extends Controller
         $form = new PasswordResetRequestForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                (new PasswordResetService())->request($form);
+                $this->passwordResetService->request($form);
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
                 return $this->goHome();
             } catch (DomainException $e) {
@@ -207,7 +226,7 @@ class SiteController extends Controller
      */
     public function actionResetPassword($token)
     {
-        $service = new PasswordResetService();
+        $service = $this->passwordResetService;
 
         try {
             $service->validateToken($token);
@@ -242,7 +261,7 @@ class SiteController extends Controller
      */
     public function actionVerifyEmail($token)
     {
-        $service = new SignupService();
+        $service = $this->signUpService;
 
         try {
             $service->validateToken($token);
@@ -272,7 +291,7 @@ class SiteController extends Controller
         $form = new ResendVerificationEmailForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                (new SignupService())->resendRequest($form);
+                $this->signUpService->resendRequest($form);
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
                 return $this->goHome();
             } catch (DomainException $e) {
@@ -282,20 +301,6 @@ class SiteController extends Controller
 
         return $this->render('resendVerificationEmail', [
             'model' => $form
-        ]);
-    }
-
-    public function actionAddtext()
-    {
-        $text = new Text();
-
-        if ($text->load(Yii::$app->request->post()) && $text->save()) {
-            (new TextParser())->parseTextFromModel($text);
-            return $this->render('textView', ['model' => $text]);
-        }
-
-        return $this->render('textCreate', [
-            'model' => $text,
         ]);
     }
 }

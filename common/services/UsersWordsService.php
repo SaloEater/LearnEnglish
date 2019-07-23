@@ -12,9 +12,9 @@ class UsersWordsService
 {
     private $userswords;
 
-    public function __construct()
+    public function __construct(UsersWordsRepository $userswords)
     {
-        $this->userswords = new UsersWordsRepository();
+        $this->userswords = $userswords;
     }
 
     public function changeStatus($id)

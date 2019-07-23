@@ -9,9 +9,9 @@ class TranslationService
 {
     private $translations;
 
-    public function __construct()
+    public function __construct(TranslationRepository $translations)
     {
-        $this->translations = new TranslationRepository();
+        $this->translations = $translations;
     }
 
     /**
