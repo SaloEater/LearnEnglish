@@ -18,7 +18,8 @@
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
-        "yiisoft/yii2-httpclient": "*"
+        "yiisoft/yii2-httpclient": "*",
+        "grozzzny/depends": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -28,7 +29,8 @@
         "phpunit/phpunit": "~6.5.5",
         "codeception/verify": "~1.0.0",
         "symfony/browser-kit": ">=2.7 <=4.2.4",
-        "codeception/assert-throws": "*"
+        "codeception/assert-throws": "*",
+        "loveorigami/yii2-bootstrap-toggle": "*"
     },
     "config": {
         "process-timeout": 1800,

@@ -3,14 +3,27 @@
 
 namespace frontend\controllers;
 
-use common\entities\UsersWords;
+use backend\models\MegaUsersWordsSearch;
+use common\services\UsersWordsService;
+use common\widgets\WordStatusWidget;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 class WordController extends Controller
 {
+    private $userswordsService;
+
+    public function __construct($id, $module,
+                                UsersWordsService $userswordsService,
+                                $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->userswordsService = $userswordsService;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -21,10 +34,20 @@ class WordController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['status'],
+                        'allow' => true
+                    ],
+                    [
+                        'actions' => ['index', 'changestatus'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'status' => ['post'],
                 ],
             ],
         ];
@@ -48,21 +71,54 @@ class WordController extends Controller
 
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => UsersWords::find()->where(['user_id' => Yii::$app->user->id]),
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'count' => SORT_DESC,
-                ]
-            ],
-        ]);
+        $queryParams = Yii::$app->request->queryParams;
+
+        /*$preparedURl = Url::to('/word/index') . '?';
+
+        if (isset($queryParams['MegaUsersWordsSearch'])) {
+            foreach ($queryParams['MegaUsersWordsSearch'] as $param=>$value) {
+                $preparedURl .= 'MegaUsersWordsSearch['.$param.']='.$value.'&';
+            }
+        }
+
+        if (isset($queryParams['sort'])) {
+            $preparedURl .= 'sort=' . $queryParams['sort'];
+        }*/
+
+        //
+        /*if (Yii::$app->request->isAjax && isset(Yii::$app->request->post()['UsersWords'])) {
+            $id = Yii::$app->request->post()['UsersWords']['id'];
+            $entity = (new UsersWordsService())->changeStatus($id);
+
+
+
+            $lol = $this->renderAjax('_wordStatusForm',[
+                'entity' => $entity,
+                'preparedURl' => $preparedURl
+            ]);
+            return $lol;
+        }*/
+        $filterModel = new MegaUsersWordsSearch();
+
+        $dataProvider = $filterModel->search($queryParams);
 
         return $this->render('index', [
+            'filterModel' => $filterModel,
             'dataProvider' => $dataProvider
         ]);
+    }
+
+    public function actionStatus()
+    {
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $id = $data['id'];
+            $entity = $this->userswordsService->changeStatus($id);
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return [
+                'known' => $entity->status,
+            ];
+        }
     }
 
 }

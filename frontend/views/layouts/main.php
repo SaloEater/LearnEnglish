@@ -11,7 +11,6 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
-$this->registerCssFile('css/frontend.css');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -35,6 +34,9 @@ $this->registerCssFile('css/frontend.css');
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
+        'innerContainerOptions' => [
+                'class' => 'container d-block'
+        ]
     ]);
     $menuItems = [
         //['label' => 'Home', 'url' => ['/site/index']],
@@ -42,8 +44,8 @@ $this->registerCssFile('css/frontend.css');
         //['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (!Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Profile', 'url' => ['/site/profile/']];
-        $menuItems[] = '<li>'
+        $menuItems[] = ['label' => 'Profile', 'url' => ['/profile/index']];
+        $menuItems[] = '<li class="">'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
@@ -56,13 +58,13 @@ $this->registerCssFile('css/frontend.css');
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     }
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => 'navbar-nav navbar-right flex-row'],
         'items' => $menuItems,
     ]);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="container ">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

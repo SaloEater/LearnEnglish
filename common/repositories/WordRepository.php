@@ -1,8 +1,6 @@
 <?php
 namespace common\repositories;
 use common\entities\Word;
-use common\repositories\IRepository;
-use phpDocumentor\Reflection\Types\Integer;
 use yii\db\Query;
 use yii\web\NotFoundHttpException;
 
@@ -20,11 +18,11 @@ class WordRepository extends IRepository
      */
     public function getByContent(string $content)
     {
-        $form = $this->getBy([
+        $word = $this->getBy([
             'content' => $content
         ]);
 
-        return $form;
+        return $word;
     }
 
     public function countItemsBeforeUs($count)

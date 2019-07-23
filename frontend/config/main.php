@@ -43,6 +43,7 @@ return [
                 '<alias:\w+>' => 'site/<alias>',
                 'text/<alias:\w+>' => 'text/<alias>',
                 'word/<alias:\w+>' => 'word/<alias>',
+                'profile/<alias:\w+>' => 'profile/<alias>',
             ],
         ],
     ],

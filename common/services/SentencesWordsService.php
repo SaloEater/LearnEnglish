@@ -11,9 +11,9 @@ class SentencesWordsService
 {
     private $sentenceswords;
 
-    public function __construct()
+    public function __construct(SentencesWordsRepository $sentenceswords)
     {
-        $this->sentenceswords = new SentencesWordsRepository();
+        $this->sentenceswords = $sentenceswords;
     }
 
     /**

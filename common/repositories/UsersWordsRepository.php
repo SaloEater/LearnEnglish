@@ -15,6 +15,14 @@ class UsersWordsRepository extends IRepository
         $this->type = new UsersWords();
     }
 
+    public function getById(int $id)
+    {
+        $item = $this->getBy([
+            'id' => $id
+        ]);
+        return $item;
+    }
+
     /**
      * @param int $user_id
      * @param int $word_id
