@@ -9,8 +9,8 @@
 namespace common\widgets;
 
 
+use lo\widgets\Toggle;
 use yii\base\Widget;
-use yii\helpers\Url;
 
 class WordStatusWidget extends Widget
 {
@@ -19,49 +19,38 @@ class WordStatusWidget extends Widget
 
     public function run()
     {
-        $output = \yii\helpers\Html::button(
-            'Изменить',
-            [
-                'id' => 'ws'.$this->id,
-                'class' => 'btn btn-small'.($this->status?' btn-success':' btn-danger')
-            ]
-        );
-        /*$output = \yii\helpers\Html::submitButton('Изменить', [
-                'url' => Url::to(['','id'=>$this->id]),
-                'class' => 'btn btn-small'.(((bool)$this->status)?' btn-success':' btn-danger'),
-            ]
-        );*/
-
-        echo $output;
-        $this->registerScript();
-    }
-
-    public function registerScript()
-    {
         $id = $this->id;
         $token = \Yii::$app->request->getCsrfToken();
-        $js = <<<JS
-$("#ws$id").click(function(){
-            $.ajax({url: "/word/status", 
-                type: "post",
-                data: {
-                    id: "$id",
-                     _csrf : "$token"
-                },
-                success: function(result) {
-                    if (result.known) {
-                        $("#ws$id").toggleClass("btn-success btn-danger");
-                    } else {
-                        $("#ws$id").toggleClass("btn-success btn-danger");                        
-                    }
-                },
-                error: function(xhr) {
-                    alert("An error occured: " + xhr.status + " " + xhr.statusText);
-                }            
-            });
-        });
-JS;
-        $this->view->registerJs($js);
+        echo Toggle::widget([
+            'name' => $id,
+            'checked' => $this->status,
+            'clientEvents' => [
+                    'change' => <<<JS
+                        function(e){
+                            $.ajax({url: "/word/status",
+                                type: "post",
+                                data: {
+                                            id: "$id",
+                                     _csrf : "$token"
+                                },
+                                success: function(result) {
+                                    parent = $(e.currentTarget)[0]['parentElement'];
+                                    if (!result.known) {
+                                        $(parent).toggleClass('btn-success btn-danger off')
+                                    }
+                                },
+                                error: function(xhr) {
+                                    alert("An error occured: " + xhr.status + " " + xhr.statusText);
+                                }
+                            });
+                        }
+JS
+            ],
+            'options' => [
+                'data-on' => 'Да',
+                'data-off' => 'Нет',
+            ]
+        ]);
     }
 
 }

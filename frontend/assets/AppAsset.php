@@ -17,6 +17,7 @@ class AppAsset extends AssetBundle
     public $js = [
     ];
     public $depends = [
+        'frontend\assets\FixBS4Asset',
         'yii\web\YiiAsset',
         'grozzzny\depends\bootstrap4\Bootstrap4Asset',
         'grozzzny\depends\bootstrap4\Bootstrap4PluginAsset',

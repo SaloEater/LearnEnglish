@@ -26,9 +26,19 @@ $view = $this;
             'label' => 'Слово',
             'attribute' => 'word_content',
             'value' => 'word.content',
+            'options' => [
+                'style' => [
+                    'width' => '35%'
+                ],
+                'class' => ''
+            ],
+            'headerOptions' => [
+                'class' => 'text-white fixed',
+            ]
         ],
         [
             'attribute' => 'status',
+            'label' => 'Изучено',
             'value' => function (UsersWords $data) use ($view)  {
 //                return \yii\helpers\Html::a(\lo\widgets\Toggle::widget(['name' => 'status', 'checked' => (bool)$data->status]), ['', 'id'=>$data->id]);
                 return $view->render('wordStatusAjaxElement', [
@@ -47,27 +57,61 @@ $view = $this;
                         'text' => 'Все',
                         'options' => ['value'=>""]
                     ],
-                    'class' => 'form-control',
+                    'class' => 'form-control fixed',
                 ]),
             'options' => [
                 'style' => [
-                    'width' => '15rem'
-                ]
+                    'width' => '10%'
+                ],
             ],
-            'format' => 'raw'
+            'format' => 'raw',
+            'headerOptions' => [
+                'class' => 'text-white fixed',
+                'scope' => 'col'
+            ]
         ],
         [
             'label' => 'У вас',
             'attribute' => 'order',
-            'filter' => false
+            'filter' => false,
+            'headerOptions' => [
+                'class' => 'text-white fixed',
+                'scope' => 'col'
+            ],
+            'options' => [
+                'style' => [
+                    'width' => '20%'
+                ]
+            ],
         ],
         [
             'attribute' => 'word_order',
             'value' => 'word.order',
             'label' => 'Рейтинг глобально',
-            'filter' => false
+            'filter' => false,
+            'headerOptions' => [
+                'class' => 'text-white fixed',
+                'scope' => 'col'
+            ],
+            'options' => [
+                'style' => [
+                    'width' => '20%'
+                ]
+            ],
         ]
     ],
+    'tableOptions' => [
+        'class' => 'table table-hover fixed border-dark',
+    ],
+    'layout' => "{items}\n{pager}",
+    'headerRowOptions' => [
+        'class' => 'thead-dark',
+    ],
+    'filterRowOptions' => [
+        'class' => 'bg-dark',
+    ],
+    'rowOptions' => [
+    ]
 ]) ?>
 
 <?php

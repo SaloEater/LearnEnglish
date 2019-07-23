@@ -72,32 +72,6 @@ class WordController extends Controller
     public function actionIndex()
     {
         $queryParams = Yii::$app->request->queryParams;
-
-        /*$preparedURl = Url::to('/word/index') . '?';
-
-        if (isset($queryParams['MegaUsersWordsSearch'])) {
-            foreach ($queryParams['MegaUsersWordsSearch'] as $param=>$value) {
-                $preparedURl .= 'MegaUsersWordsSearch['.$param.']='.$value.'&';
-            }
-        }
-
-        if (isset($queryParams['sort'])) {
-            $preparedURl .= 'sort=' . $queryParams['sort'];
-        }*/
-
-        //
-        /*if (Yii::$app->request->isAjax && isset(Yii::$app->request->post()['UsersWords'])) {
-            $id = Yii::$app->request->post()['UsersWords']['id'];
-            $entity = (new UsersWordsService())->changeStatus($id);
-
-
-
-            $lol = $this->renderAjax('_wordStatusForm',[
-                'entity' => $entity,
-                'preparedURl' => $preparedURl
-            ]);
-            return $lol;
-        }*/
         $filterModel = new MegaUsersWordsSearch();
 
         $dataProvider = $filterModel->search($queryParams);
