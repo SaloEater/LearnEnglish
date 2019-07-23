@@ -101,7 +101,7 @@ $view = $this;
         ]
     ],
     'tableOptions' => [
-        'class' => 'table table-hover fixed border-dark',
+        'class' => 'table table-hover fixed text-right-fc text-center-sc border-dark white-link white-visited white-active',
     ],
     'layout' => "{items}\n{pager}",
     'headerRowOptions' => [

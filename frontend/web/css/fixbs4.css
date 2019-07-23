@@ -1,23 +1,27 @@
 select.fixed.form-control:not([size]):not([multiple]) {
     height: 34px;
 }
-.fixed a:link {
+.fixed.white-link a:link {
     color: #fff !important;
 }
 
-.fixed a:visited {
+.fixed.white-visited a:visited {
     color: #fff !important;
 }
 
-.fixed a:active {
+.fixed.white-active a:active {
     color: #fff !important;
 }
 
-table.fixed th:first-of-type, table.fixed tr td:first-of-type{
+table.fixed.text-center-fc th:first-of-type, table.fixed.text-center-fc tr td:first-of-type{
+    text-align: center;
+}
+
+table.fixed.text-right-fc th:first-of-type, table.fixed.text-right-fc tr td:first-of-type{
     text-align: right;
 }
 
-table.fixed tr td:nth-child(2), table.fixed tr th:nth-child(2){
+table.fixed.text-center-sc tr td:nth-child(2), table.fixed.text-center-sc tr th:nth-child(2){
     text-align: center;
 }
 

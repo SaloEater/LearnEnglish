@@ -11,6 +11,8 @@ class IRepository
      */
     protected $type;
 
+    //TODO Доделать find методы
+
     protected function getBy(array $condition): ActiveRecord
     {
         $object = $this->type::find()->andWhere($condition)->limit(1)->one();
