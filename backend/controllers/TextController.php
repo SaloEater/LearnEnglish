@@ -84,7 +84,7 @@ class TextController extends Controller
         $textModel = new Text();
 
         if ($textModel->load(Yii::$app->request->post()) && $textModel->save()) {
-            (new TextParser())->parseTextFromModel($textModel);
+            Yii::createObject(TextParser::class)->parseTextFromModel($textModel);
             return $this->redirect(['view', 'id' => $textModel->id]);
         }
 
@@ -119,6 +119,8 @@ class TextController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {

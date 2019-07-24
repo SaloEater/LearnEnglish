@@ -1,9 +1,14 @@
 <?php
 
-/* @var $entity \common\entities\UsersWords*/
+/* @var $entity UsersWords*/
+
+use common\entities\UsersWords;
+use common\widgets\WordStatusWidget;
+use yii\widgets\ActiveForm;
+
 /* @var $preparedURl string*/
 
-$form = \yii\widgets\ActiveForm::begin([
+$form = ActiveForm::begin([
     'options' => [
         'data-pjax' => true,
     ],
@@ -11,11 +16,11 @@ $form = \yii\widgets\ActiveForm::begin([
 
 echo $form->field($entity, 'id')->hiddenInput(['value' => $entity->id])->label(false);
 
-echo \common\widgets\WordStatusWidget::widget([
+echo WordStatusWidget::widget([
     'entity' => $entity,
     'preparedURl' => $preparedURl
 ]);
 
-\yii\widgets\ActiveForm::end();
+ActiveForm::end();
 
 ?>

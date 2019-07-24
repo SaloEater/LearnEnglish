@@ -5,6 +5,8 @@ namespace common\entities;
 use common\behaviours\MD5Behavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "text".
@@ -21,7 +23,7 @@ use yii\behaviors\TimestampBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  */
-class Text extends \yii\db\ActiveRecord
+class Text extends ActiveRecord
 {
 
     public function behaviors()
@@ -76,7 +78,7 @@ class Text extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSentences()
     {
@@ -84,7 +86,7 @@ class Text extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCreatedBy()
     {
@@ -92,7 +94,7 @@ class Text extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUpdatedBy()
     {

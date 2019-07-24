@@ -6,6 +6,10 @@ namespace common\services;
 
 use common\entities\FormsWords;
 use common\repositories\FormsWordsRepository;
+use DomainException;
+use RuntimeException;
+use yii\db\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 class FormsWordsService
 {
@@ -19,7 +23,7 @@ class FormsWordsService
     /**
      * @param int $form_id
      * @param int $word_id
-     * @throws \yii\web\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public function EstablishLinkBetween(int $form_id, int $word_id)
     {
@@ -29,14 +33,14 @@ class FormsWordsService
     /**
      * @param int $form_id
      * @param int $word_id
-     * @return FormsWords|\yii\db\ActiveRecord
-     * @throws \yii\web\NotFoundHttpException
+     * @return FormsWords|ActiveRecord
+     * @throws NotFoundHttpException
      */
     public function getByIDs(int $form_id, int $word_id)
     {
         try {
             $form = $this->formswords->getByIDs($form_id, $word_id);
-        } catch(\DomainException $e) {
+        } catch(DomainException $e) {
             $form = $this->createWithIDs($form_id, $word_id);
         }
         return $form;
@@ -62,7 +66,7 @@ class FormsWordsService
     public function save(FormsWords $formsWords)
     {
         if (!$formsWords->save()) {
-            throw new \RuntimeException('Forms words saving error');
+            throw new RuntimeException('Forms words saving error');
         }
     }
 }

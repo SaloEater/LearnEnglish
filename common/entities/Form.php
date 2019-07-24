@@ -2,6 +2,9 @@
 
 namespace common\entities;
 
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "form".
  *
@@ -12,7 +15,7 @@ namespace common\entities;
  * @property FormsWords[] $formsWords
  * @property Word[] $words
  */
-class Form extends \yii\db\ActiveRecord
+class Form extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -46,7 +49,7 @@ class Form extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getFormsWords()
     {
@@ -54,7 +57,8 @@ class Form extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getWords()
     {

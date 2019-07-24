@@ -3,6 +3,10 @@
 namespace common\services;
 
 use common\entities\Word;
+use DomainException;
+use RuntimeException;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
 
 class WordService extends WordUsersWordsService
@@ -10,7 +14,7 @@ class WordService extends WordUsersWordsService
 
     /**
      * @param int $top
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTopWords(int $top = 10)
     {
@@ -33,14 +37,14 @@ class WordService extends WordUsersWordsService
 
     /**
      * @param string $content
-     * @return Word|\yii\db\ActiveRecord
+     * @return Word|ActiveRecord
      * @throws NotFoundHttpException
      */
     public function getByContent(string $content)
     {
         try {
             $word = $this->words->getByContent($content);
-        } catch(\DomainException $e) {
+        } catch(DomainException $e) {
             $word = $this->createWithContent($content);
         }
         return $word;
@@ -63,7 +67,7 @@ class WordService extends WordUsersWordsService
             $this->setOrder($word);
         }
         if (!$word->save()) {
-            throw new \RuntimeException('Form saving error');
+            throw new RuntimeException('Form saving error');
         }
     }
 }

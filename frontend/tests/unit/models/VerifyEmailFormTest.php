@@ -3,18 +3,22 @@
 namespace frontend\tests\unit\models;
 
 use Codeception\AssertThrows;
+use Codeception\Test\Unit;
 use common\entities\User;
 use common\fixtures\UserFixture;
 use common\repositories\NotFoundException;
 use common\repositories\UserRepository;
+use DomainException;
 use frontend\forms\VerifyEmailForm;
 use frontend\services\auth\SignupService;
+use frontend\tests\UnitTester;
+use Yii;
 
-class VerifyEmailFormTest extends \Codeception\Test\Unit
+class VerifyEmailFormTest extends Unit
 {
     use AssertThrows;
     /**
-     * @var \frontend\tests\UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -42,7 +46,7 @@ class VerifyEmailFormTest extends \Codeception\Test\Unit
 
     public function testAlreadyActivatedToken()
     {
-        $this->tester->expectException(\DomainException::class, function() {
+        $this->tester->expectException(DomainException::class, function() {
             (new SignupService())->confirm('already_used_token_1548675330');
         });
     }
@@ -52,15 +56,15 @@ class VerifyEmailFormTest extends \Codeception\Test\Unit
         $fix = $this->tester->grabFixture('user', 2);
         $form = new VerifyEmailForm(['token' => $fix->verification_token]);
 
-        $this->assertNotThrows(\DomainException::class, function() use ($form) {
+        $this->assertNotThrows(DomainException::class, function() use ($form) {
             (new SignupService())->confirm($form->token);
         });
-        $user = (new UserRepository())->getByUsername($fix->username);
+        $user = Yii::createObject(UserRepository::class)->getByUsername($fix->username);
         expect($user)->isInstanceOf('common\entities\User');
 
         expect($user->username)->equals('test.test');
         expect($user->email)->equals('test@mail.com');
-        expect($user->status)->equals(\common\entities\User::STATUS_ACTIVE);
+        expect($user->status)->equals(User::STATUS_ACTIVE);
         expect($user->validatePassword('Test1234'))->true();
     }
 }

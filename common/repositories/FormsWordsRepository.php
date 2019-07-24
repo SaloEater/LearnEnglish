@@ -5,6 +5,7 @@ namespace common\repositories;
 
 
 use common\entities\FormsWords;
+use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
 
 class FormsWordsRepository extends IRepository
@@ -19,8 +20,7 @@ class FormsWordsRepository extends IRepository
     /**
      * @param int $form_id
      * @param int $word_id
-     * @return \yii\db\ActiveRecord
-     * @throws NotFoundHttpException
+     * @return ActiveRecord
      */
     public function getByIDs(int $form_id, int $word_id)
     {

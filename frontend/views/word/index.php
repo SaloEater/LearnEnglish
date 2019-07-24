@@ -1,24 +1,29 @@
 <?php
 
-/* @var $this \yii\web\View*/
+/* @var $this View*/
 /* @var $dataProvider  ActiveDataProvider*/
-/* @var $filterModel \backend\models\MegaUsersWordsSearch*/
+/* @var $filterModel MegaUsersWordsSearch*/
 
+use backend\models\MegaUsersWordsSearch;
 use common\entities\UsersWords;
 use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\web\View;
+use yii\widgets\Pjax;
 
 $view = $this;
 ?>
 
 <?php
 
-\yii\widgets\Pjax::begin([
+Pjax::begin([
     'enablePushState' => false
 ]);
 
 ?>
 
-<?= \yii\grid\GridView::widget([
+<?= GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $filterModel,
     'columns' => [
@@ -46,7 +51,7 @@ $view = $this;
                     'status' => (bool)$data->status
                 ]);
             },
-            'filter' => \yii\helpers\Html::activeDropDownList($filterModel,
+            'filter' => Html::activeDropDownList($filterModel,
                 'status',
                 [
                     '0' => 'Не изучено',
@@ -116,6 +121,6 @@ $view = $this;
 
 <?php
 
-\yii\widgets\Pjax::end();
+Pjax::end();
 
 ?>

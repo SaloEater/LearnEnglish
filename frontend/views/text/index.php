@@ -3,12 +3,13 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
 
-<?= \yii\grid\GridView::widget([
+<?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
             [
@@ -62,6 +63,6 @@ use yii\helpers\Url;
     'layout' => "{items}\n{pager}",
 ]) ?>
 
-<p><?= \yii\helpers\Html::a('Добавить текст', \yii\helpers\Url::to('add'), ['class' => 'btn btn-success']) ?></p>
+<p><?= Html::a('Добавить текст', Url::to('add'), ['class' => 'btn btn-success']) ?></p>
 
 

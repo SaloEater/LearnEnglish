@@ -14,6 +14,16 @@ use yii\web\Controller;
 class TextController extends Controller
 {
 
+    private $textRepository;
+
+    public function __construct($id, $module,
+                                TextRepository $textRepository,
+                                $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->textRepository = $textRepository;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -78,7 +88,7 @@ class TextController extends Controller
         $text = new Text();
 
         if ($text->load(Yii::$app->request->post()) && $text->save()) {
-            (new TextParser())->parseTextFromModel($text);
+            Yii::createObject(TextParser::class)->parseTextFromModel($text);
             $this->redirect('index');
         }
 
@@ -93,7 +103,7 @@ class TextController extends Controller
             return $this->redirect('/profile');
         }
 
-        $text = (new TextRepository())->getById($id);
+        $text = $this->textRepository->getById($id);
 
         return $this->render('view', [
             'model' => $text

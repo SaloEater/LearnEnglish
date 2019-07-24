@@ -2,6 +2,9 @@
 
 namespace common\entities;
 
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "sentence".
  *
@@ -13,7 +16,7 @@ namespace common\entities;
  * @property SentencesWords[] $sentencesWords
  * @property Word[] $words
  */
-class Sentence extends \yii\db\ActiveRecord
+class Sentence extends ActiveRecord
 {
 
     public function behaviors()
@@ -57,7 +60,7 @@ class Sentence extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getText()
     {
@@ -65,7 +68,7 @@ class Sentence extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSentencesWords()
     {
@@ -73,7 +76,8 @@ class Sentence extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getWords()
     {

@@ -2,6 +2,9 @@
 
 namespace common\entities;
 
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "word".
  *
@@ -18,7 +21,7 @@ namespace common\entities;
  * @property UsersWords[] $usersWords
  * @property User[] $users
  */
-class Word extends \yii\db\ActiveRecord
+class Word extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -53,7 +56,7 @@ class Word extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getFormsWords()
     {
@@ -61,7 +64,8 @@ class Word extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getForms()
     {
@@ -69,7 +73,7 @@ class Word extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSentencesWords()
     {
@@ -77,7 +81,8 @@ class Word extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getSentences()
     {
@@ -85,7 +90,7 @@ class Word extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTranslations()
     {
@@ -93,7 +98,7 @@ class Word extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUsersWords()
     {
@@ -101,7 +106,8 @@ class Word extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getUsers()
     {

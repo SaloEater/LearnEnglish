@@ -4,6 +4,10 @@ namespace common\services;
 
 use common\entities\Translation;
 use common\repositories\TranslationRepository;
+use DomainException;
+use RuntimeException;
+use yii\db\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 class TranslationService
 {
@@ -37,14 +41,14 @@ class TranslationService
      * @param string $type
      * @param int $word_id
      * @param $sort
-     * @return Translation|\yii\db\ActiveRecord
-     * @throws \yii\web\NotFoundHttpException
+     * @return Translation|ActiveRecord
+     * @throws NotFoundHttpException
      */
     public function ensureExists(string $content, string $type, int $word_id, $sort)
     {
         try {
             $translation = $this->translations->getByTrAndTypeForWord($content, $type, $word_id);
-        } catch(\DomainException $e) {
+        } catch(DomainException $e) {
             $translation = $this->createWithContentAndTypeForWord($content, $type, $word_id, $sort);
         }
         return $translation;
@@ -56,7 +60,7 @@ class TranslationService
     public function save(Translation $form)
     {
         if (!$form->save()) {
-            throw new \RuntimeException('Translation saving error');
+            throw new RuntimeException('Translation saving error');
         }
     }
 }

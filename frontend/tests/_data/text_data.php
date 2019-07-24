@@ -1,7 +1,9 @@
 <?php
 
-$user = \common\entities\User::findOne(['username' => 'erau']);
-$user2 = \common\entities\User::findOne(['username' => 'test']);
+use common\entities\User;
+
+$user = User::findOne(['username' => 'erau']);
+$user2 = User::findOne(['username' => 'test']);
 
 return [
     [

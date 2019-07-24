@@ -2,15 +2,18 @@
 namespace frontend\tests\unit\models;
 
 use Codeception\AssertThrows;
+use Codeception\Test\Unit;
 use common\fixtures\UserFixture as UserFixture;
 use frontend\forms\ContactForm;
 use frontend\services\contact\ContactService;
+use frontend\tests\UnitTester;
+use RuntimeException;
 use yii\mail\MessageInterface;
 
-class ContactFormTest extends \Codeception\Test\Unit
+class ContactFormTest extends Unit
 {
     /**
-     * @var \frontend\tests\UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -37,7 +40,7 @@ class ContactFormTest extends \Codeception\Test\Unit
             'body' => 'body of current message',
         ];
 
-        $this->assertNotThrows(\RuntimeException::class, function() use ($form) {
+        $this->assertNotThrows(RuntimeException::class, function() use ($form) {
             (new ContactService())->sendEmail($form);
         });
 

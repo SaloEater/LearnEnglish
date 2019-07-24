@@ -1,9 +1,10 @@
 <?php
 
+use common\entities\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/* @var $user \common\entities\User */
+/* @var $user User */
 
 ?>
 

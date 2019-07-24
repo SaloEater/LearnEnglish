@@ -1,10 +1,12 @@
 <?php
 namespace common\entities;
 
-use common\services\UserService;
+use DomainException;
 use Yii;
+use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -49,7 +51,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function confirmSignup()
     {
         if (!$this->isWait()) {
-            throw new \DomainException('Email is already confirmed.');
+            throw new DomainException('Email is already confirmed.');
         }
 
         $this->image_url = '/images/defaultAvatar.png';
@@ -122,7 +124,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTexts()
     {
@@ -130,7 +132,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTextsUpdated()
     {
@@ -138,7 +140,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUsersWords()
     {
@@ -146,7 +148,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getWords()
     {
@@ -265,7 +268,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * @param $password
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function setPassword($password)
     {
@@ -286,11 +289,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function generatePasswordResetToken()
     {
         if ($this->isWait()) {
-            throw new \DomainException('User has not confirmed email');
+            throw new DomainException('User has not confirmed email');
         }
 
         if (!empty($this->password_reset_token) && self::isPasswordResetTokenValid($this->password_reset_token)) {
-            throw new \DomainException('Token is already requested');
+            throw new DomainException('Token is already requested');
         }
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
@@ -298,7 +301,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function resetPassword($password)
     {
         if (empty($this->password_reset_token)) {
-            throw new \DomainException('Token is not requested');
+            throw new DomainException('Token is not requested');
         }
         $this->setPassword($password);
         $this->removePasswordResetToken();

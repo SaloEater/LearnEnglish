@@ -2,6 +2,7 @@
 
 namespace common\services;
 
+use yii\base\InvalidConfigException;
 use yii\httpclient\Client;
 
 class WordAPI
@@ -9,7 +10,7 @@ class WordAPI
     /**
      * @param string $word
      * @return array|bool
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function IsForm(string $word)
     {

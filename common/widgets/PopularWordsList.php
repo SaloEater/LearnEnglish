@@ -2,6 +2,7 @@
 namespace common\widgets;
 
 use common\services\WordService;
+use Yii;
 use yii\base\Widget;
 use yii\db\ActiveQuery;
 
@@ -16,7 +17,7 @@ class PopularWordsList extends Widget
         $output .= "<thead><tr><th scope='col'>Топ</th><th scope='col'>Слово</th></tr></thead><tbody>";
 
         /* @var $topWords ActiveQuery*/
-        $topWords = \Yii::createObject(WordService::class)->getTopWords();
+        $topWords = Yii::createObject(WordService::class)->getTopWords();
 
         $i = 1;
         foreach($topWords->all() as $item) {

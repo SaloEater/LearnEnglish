@@ -6,6 +6,10 @@ namespace common\services;
 
 use common\entities\UsersWords;
 use common\entities\Word;
+use DomainException;
+use RuntimeException;
+use yii\db\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 class UsersWordsService extends WordUsersWordsService
 {
@@ -21,14 +25,14 @@ class UsersWordsService extends WordUsersWordsService
     /**
      * @param int $user_id
      * @param int $word_id
-     * @return UsersWords|\yii\db\ActiveRecord
-     * @throws \yii\web\NotFoundHttpException
+     * @return UsersWords|ActiveRecord
+     * @throws NotFoundHttpException
      */
     public function getLink(int $user_id, int $word_id)
     {
         try {
             $user = $this->userswords->getByIDs($user_id, $word_id);
-        } catch(\DomainException $e) {
+        } catch(DomainException $e) {
             $user = $this->createWithIDs($user_id, $word_id);
         }
         return $user;
@@ -51,6 +55,7 @@ class UsersWordsService extends WordUsersWordsService
     /**
      * @param UsersWords $usersWords
      * todo не забудь добавить метод SetOrder
+     * @param bool $increment
      */
     public function save(UsersWords $usersWords, $increment = true)
     {
@@ -59,7 +64,7 @@ class UsersWordsService extends WordUsersWordsService
             $this->setOrder($usersWords);
         }
         if (!$usersWords->save()) {
-            throw new \RuntimeException('UsersWords saving error');
+            throw new RuntimeException('UsersWords saving error');
         }
     }
 

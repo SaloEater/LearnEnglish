@@ -5,6 +5,7 @@ namespace common\repositories;
 
 
 use common\entities\SentencesWords;
+use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
 
 class SentencesWordsRepository extends IRepository
@@ -19,8 +20,7 @@ class SentencesWordsRepository extends IRepository
     /**
      * @param int $sentence_id
      * @param int $word_id
-     * @return \yii\db\ActiveRecord
-     * @throws NotFoundHttpException
+     * @return ActiveRecord
      */
     public function getByIDs(int $sentence_id, int $word_id)
     {

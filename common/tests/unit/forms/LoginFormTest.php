@@ -2,7 +2,10 @@
 
 namespace common\tests\unit\forms;
 use Codeception\AssertThrows;
+use Codeception\Test\Unit;
 use common\repositories\NotFoundException;
+use common\tests\UnitTester;
+use DomainException;
 use PHPUnit\Framework\AssertionFailedError;
 use common\fixtures\UserFixture;
 use common\forms\LoginForm;
@@ -12,12 +15,12 @@ use Yii;
 /**
  * Login form test
  */
-class LoginFormTest extends \Codeception\Test\Unit
+class LoginFormTest extends Unit
 {
     use AssertThrows;
 
     /**
-     * @var \common\tests\UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -43,7 +46,7 @@ class LoginFormTest extends \Codeception\Test\Unit
         ]);
 
         $this->assertThrows(NotFoundException::class, function() use ($form){
-            (new AuthService())->auth($form);
+            Yii::createObject(AuthService::class)->auth($form);
         });
         expect('user should not be logged in', Yii::$app->user->isGuest)->true();
     }
@@ -55,8 +58,8 @@ class LoginFormTest extends \Codeception\Test\Unit
             'password' => 'wrong_password',
         ]);
 
-        $this->assertThrows(\DomainException::class, function() use ($form){
-            (new AuthService())->auth($form);
+        $this->assertThrows(DomainException::class, function() use ($form){
+            Yii::createObject(AuthService::class)->auth($form);
         });
     }
 
@@ -67,8 +70,8 @@ class LoginFormTest extends \Codeception\Test\Unit
             'password' => 'password_0',
         ]);
 
-        $this->assertNotThrows(\DomainException::class, function() use ($form){
-            (new AuthService())->auth($form);
+        $this->assertNotThrows(DomainException::class, function() use ($form){
+            Yii::createObject(AuthService::class)->auth($form);
         });
     }
 }

@@ -2,8 +2,9 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\forms\SignupForm */
+/* @var $model SignupForm */
 
+use frontend\forms\SignupForm;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 

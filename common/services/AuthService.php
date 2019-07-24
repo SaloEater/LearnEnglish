@@ -12,6 +12,7 @@ namespace common\services;
 use common\entities\User;
 use common\forms\LoginForm;
 use common\repositories\UserRepository;
+use DomainException;
 
 class AuthService
 {
@@ -30,7 +31,7 @@ class AuthService
         /* @var $user User*/
         $user = $this->users->getByUsername($form->username);
         if (!$user || !$user->isActive() || !$user->validatePassword($form->password)) {
-            throw new \DomainException('Undefined user or password');
+            throw new DomainException('Undefined user or password');
         }
         return $user;
     }

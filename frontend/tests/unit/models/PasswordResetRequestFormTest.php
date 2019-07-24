@@ -3,20 +3,23 @@
 namespace frontend\tests\unit\models;
 
 use Codeception\AssertThrows;
+use Codeception\Test\Unit;
 use common\entities\User;
 use common\fixtures\UserFixture as UserFixture;
 use common\repositories\NotFoundException;
 use common\services\AuthService;
+use DomainException;
 use frontend\forms\PasswordResetRequestForm;
 use frontend\services\auth\PasswordResetService;
+use frontend\tests\UnitTester;
 use Yii;
 
-class PasswordResetRequestFormTest extends \Codeception\Test\Unit
+class PasswordResetRequestFormTest extends Unit
 {
     use AssertThrows;
 
     /**
-     * @var \frontend\tests\UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -48,7 +51,7 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $user = $this->tester->grabFixture('user', 1);
         $form = new PasswordResetRequestForm();
         $form->email = $user->email;
-        $this->assertThrowsWithMessage(\DomainException::class, 'User has not confirmed email',function() use ($form) {
+        $this->assertThrowsWithMessage(DomainException::class, 'User has not confirmed email',function() use ($form) {
             (new PasswordResetService())->request($form);
         });
     }

@@ -6,6 +6,7 @@ namespace common\services;
 
 use common\entities\Sentence;
 use common\repositories\SentenceRepository;
+use RuntimeException;
 
 class SentenceService
 {
@@ -22,7 +23,7 @@ class SentenceService
     public function save(Sentence $sentence)
     {
         if (!$sentence->save()) {
-            throw new \RuntimeException('Sentence saving error');
+            throw new RuntimeException('Sentence saving error');
         }
     }
 

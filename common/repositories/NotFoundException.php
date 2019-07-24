@@ -9,7 +9,9 @@
 namespace common\repositories;
 
 
-class NotFoundException extends \DomainException
+use DomainException;
+
+class NotFoundException extends DomainException
 {
 
 }

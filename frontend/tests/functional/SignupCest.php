@@ -2,6 +2,7 @@
 
 namespace frontend\tests\functional;
 
+use common\entities\User;
 use frontend\tests\FunctionalTester;
 
 class SignupCest
@@ -50,7 +51,7 @@ class SignupCest
         $I->seeRecord('common\entities\User', [
             'username' => 'tester',
             'email' => 'tester.email@example.com',
-            'status' => \common\entities\User::STATUS_WAIT
+            'status' => User::STATUS_WAIT
         ]);
 
         $I->seeEmailIsSent();

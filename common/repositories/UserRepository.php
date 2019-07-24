@@ -9,6 +9,7 @@
 namespace common\repositories;
 
 use common\entities\User;
+use RuntimeException;
 
 class UserRepository extends IRepository
 {
@@ -22,7 +23,7 @@ class UserRepository extends IRepository
     public function save(User $user)
     {
         if (!$user->save()) {
-            throw new \RuntimeException('Saving error');
+            throw new RuntimeException('Saving error');
         }
     }
 

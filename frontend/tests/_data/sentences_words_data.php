@@ -1,12 +1,14 @@
 <?php
 
+use common\entities\Sentence;
+use common\entities\Text;
 use common\entities\Word;
 
-$text = \common\entities\Text::findOne(['md5' => 'anchor']);
-$text2 = \common\entities\Text::findOne(['md5' => 'anchor2']);
+$text = Text::findOne(['md5' => 'anchor']);
+$text2 = Text::findOne(['md5' => 'anchor2']);
 
-$sentence = \common\entities\Sentence::findOne(['text_id' => $text->id]);
-$sentence2 = \common\entities\Sentence::findOne(['text_id' => $text2->id]);
+$sentence = Sentence::findOne(['text_id' => $text->id]);
+$sentence2 = Sentence::findOne(['text_id' => $text2->id]);
 
 $word1 = Word::findOne(['content' => 'random']);
 $word2 = Word::findOne(['content' => 'text']);

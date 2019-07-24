@@ -2,6 +2,7 @@
 
 namespace frontend\tests\functional;
 
+use common\entities\User;
 use common\fixtures\UserFixture;
 use frontend\tests\FunctionalTester;
 
@@ -60,7 +61,7 @@ class VerifyEmailCest
         $I->seeRecord('common\entities\User', [
            'username' => 'test.test',
            'email' => 'test@mail.com',
-           'status' => \common\entities\User::STATUS_ACTIVE
+           'status' => User::STATUS_ACTIVE
         ]);
     }
 }

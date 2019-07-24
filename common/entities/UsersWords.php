@@ -1,6 +1,7 @@
 <?php
 
 namespace common\entities;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 /**
  * This is the model class for table "users_words".
@@ -53,7 +54,7 @@ class UsersWords extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -61,7 +62,7 @@ class UsersWords extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getWord()
     {

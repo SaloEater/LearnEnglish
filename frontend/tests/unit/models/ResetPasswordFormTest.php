@@ -2,14 +2,17 @@
 
 namespace frontend\tests\unit\models;
 
+use Codeception\Test\Unit;
 use common\fixtures\UserFixture;
+use DomainException;
 use frontend\forms\ResetPasswordForm;
 use frontend\services\auth\PasswordResetService;
+use frontend\tests\UnitTester;
 
-class ResetPasswordFormTest extends \Codeception\Test\Unit
+class ResetPasswordFormTest extends Unit
 {
     /**
-     * @var \frontend\tests\UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -26,11 +29,11 @@ class ResetPasswordFormTest extends \Codeception\Test\Unit
 
     public function testResetWrongToken()
     {
-        $this->tester->expectException(\DomainException::class, function() {
+        $this->tester->expectException(DomainException::class, function() {
             (new PasswordResetService())->validateToken('');
         });
 
-        $this->tester->expectException(\DomainException::class, function() {
+        $this->tester->expectException(DomainException::class, function() {
             (new PasswordResetService())->validateToken('notexistingtoken_1391882543');
         });
     }

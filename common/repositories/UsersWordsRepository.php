@@ -5,6 +5,8 @@ namespace common\repositories;
 
 
 use common\entities\UsersWords;
+use Yii;
+use yii\db\ActiveRecord;
 use yii\db\Query;
 use yii\web\NotFoundHttpException;
 
@@ -28,7 +30,7 @@ class UsersWordsRepository extends IRepository
     /**
      * @param int $user_id
      * @param int $word_id
-     * @return \yii\db\ActiveRecord
+     * @return ActiveRecord
      * @throws NotFoundHttpException
      */
     public function getByIDs(int $user_id, int $word_id)
@@ -63,10 +65,10 @@ class UsersWordsRepository extends IRepository
     public function updateOrders(int $beforeUs, $order = false)
     {
         if ($order) {
-            $b = \Yii::$app->db->createCommand('UPDATE `users_words` SET `order`=`order`+1 WHERE `order`<' . $order . ' AND ' . '`order`>' . $beforeUs);
+            $b = Yii::$app->db->createCommand('UPDATE `users_words` SET `order`=`order`+1 WHERE `order`<' . $order . ' AND ' . '`order`>' . $beforeUs);
             $result = $b->execute();
         } else {
-            $b = \Yii::$app->db->createCommand('UPDATE `users_words` SET `order`=`order`+1 WHERE `order`>' . $beforeUs);
+            $b = Yii::$app->db->createCommand('UPDATE `users_words` SET `order`=`order`+1 WHERE `order`>' . $beforeUs);
             $result = $b->execute();
         }
         return $result;

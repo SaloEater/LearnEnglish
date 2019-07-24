@@ -1,6 +1,8 @@
 <?php
 
-$text = \common\entities\Text::findOne(['md5' => 'anchor']);
+use common\entities\Text;
+
+$text = Text::findOne(['md5' => 'anchor']);
 
 return [
     [

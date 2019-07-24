@@ -2,6 +2,9 @@
 
 namespace common\entities;
 
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "translation".
  *
@@ -13,7 +16,7 @@ namespace common\entities;
  *
  * @property Word $word
  */
-class Translation extends \yii\db\ActiveRecord
+class Translation extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -50,7 +53,7 @@ class Translation extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getWord()
     {

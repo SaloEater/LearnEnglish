@@ -1,5 +1,11 @@
 <?php
 
+use common\fixtures\SentenceFixture;
+use common\fixtures\SentencesWordsFixture;
+use common\fixtures\TextFixture;
+use common\fixtures\UserFixture;
+use common\fixtures\UsersWordsFixture;
+use common\fixtures\WordFixture;
 use frontend\tests\FunctionalTester;
 
 class IndexCest
@@ -8,27 +14,27 @@ class IndexCest
     {
         return [
             'user' => [
-                'class' => \common\fixtures\UserFixture::class,
+                'class' => UserFixture::class,
                 'dataFile' => codecept_data_dir() . 'login_data.php'
             ],
             'text' => [
-                'class' => \common\fixtures\TextFixture::class,
+                'class' => TextFixture::class,
                 'dataFile' => codecept_data_dir() . 'text_data.php'
             ],
             'sentence' => [
-                'class' => \common\fixtures\SentenceFixture::class,
+                'class' => SentenceFixture::class,
                 'dataFile' => codecept_data_dir() . 'sentence_data.php'
             ],
             'word' => [
-                'class' => \common\fixtures\WordFixture::class,
+                'class' => WordFixture::class,
                 'dataFile' => codecept_data_dir() . 'word_data.php'
             ],
             'users_words' => [
-                'class' => \common\fixtures\UsersWordsFixture::class,
+                'class' => UsersWordsFixture::class,
                 'dataFile' => codecept_data_dir() . 'users_words_data.php'
             ],
             'sentences_words' => [
-                'class' => \common\fixtures\SentencesWordsFixture::class,
+                'class' => SentencesWordsFixture::class,
                 'dataFile' => codecept_data_dir() . 'sentences_words_data.php'
             ]
         ];

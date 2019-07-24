@@ -1,9 +1,10 @@
 <?php
 
+use common\entities\User;
 use common\entities\Word;
 
-$user = \common\entities\User::findOne(['username' => 'erau']);
-$user2 = \common\entities\User::findOne(['username' => 'test']);
+$user = User::findOne(['username' => 'erau']);
+$user2 = User::findOne(['username' => 'test']);
 
 $word1 = Word::findOne(['content' => 'random']);
 $word2 = Word::findOne(['content' => 'text']);

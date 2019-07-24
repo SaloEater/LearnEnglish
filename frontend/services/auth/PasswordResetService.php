@@ -10,6 +10,7 @@ namespace frontend\services\auth;
 
 use common\entities\User;
 use common\repositories\UserRepository;
+use DomainException;
 use frontend\forms\PasswordResetRequestForm;
 use http\Exception\RuntimeException;
 use Yii;
@@ -19,7 +20,7 @@ class PasswordResetService
     private $users;
     public function __construct()
     {
-        $this->users = new UserRepository();
+        $this->users = Yii::createObject(UserRepository::class);
     }
 
     public function request(PasswordResetRequestForm $form)
@@ -30,7 +31,7 @@ class PasswordResetService
         $user->generatePasswordResetToken();
         $this->users->save($user);
 
-        $sent = \Yii::$app
+        $sent = Yii::$app
             ->mailer
             ->compose(
                 ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
@@ -49,10 +50,10 @@ class PasswordResetService
     public function validateToken($token)
     {
         if (empty($token) || !is_string($token)) {
-            throw new \DomainException('Password reset token cannot be blank.');
+            throw new DomainException('Password reset token cannot be blank.');
         }
         if (!$this->users->existsByPasswordToken($token)) {
-            throw new \DomainException('Wrong password reset token.');
+            throw new DomainException('Wrong password reset token.');
         }
     }
 

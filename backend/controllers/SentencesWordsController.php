@@ -118,6 +118,8 @@ class SentencesWordsController extends Controller
      * @param integer $word_id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($sentence_id, $word_id)
     {

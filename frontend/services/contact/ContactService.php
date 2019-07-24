@@ -1,5 +1,7 @@
 <?php
 namespace frontend\services\contact;
+use frontend\forms\ContactForm;
+use http\Exception\RuntimeException;
 use Yii;
 
 /**
@@ -11,7 +13,7 @@ use Yii;
 
 class ContactService
 {
-    public function sendEmail(\frontend\forms\ContactForm $form)
+    public function sendEmail(ContactForm $form)
     {
         $sent = Yii::$app->mailer->compose()
             ->setTo($form->email)
@@ -22,7 +24,7 @@ class ContactService
             ->send();
 
         if (!$sent) {
-            throw new \http\Exception\RuntimeException('Sending error');
+            throw new RuntimeException('Sending error');
         }
     }
 }

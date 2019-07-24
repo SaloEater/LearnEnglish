@@ -4,6 +4,10 @@ namespace common\services;
 
 use common\entities\Form;
 use common\repositories\FormRepository;
+use DomainException;
+use RuntimeException;
+use yii\db\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 class FormService
 {
@@ -28,14 +32,14 @@ class FormService
 
     /**
      * @param string $content
-     * @return Form|\yii\db\ActiveRecord
-     * @throws \yii\web\NotFoundHttpException
+     * @return Form|ActiveRecord
+     * @throws NotFoundHttpException
      */
     public function getByContent(string $content)
     {
         try {
             $form = $this->services->getByContent($content);
-        } catch(\DomainException $e) {
+        } catch(DomainException $e) {
             $form = $this->createWithContent($content);
         }
         return $form;
@@ -51,7 +55,7 @@ class FormService
             $form->count++;
         }
         if (!$form->save()) {
-            throw new \RuntimeException('Form saving error');
+            throw new RuntimeException('Form saving error');
         }
     }
 }

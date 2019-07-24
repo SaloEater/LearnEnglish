@@ -10,6 +10,7 @@ namespace common\widgets;
 
 
 use lo\widgets\Toggle;
+use Yii;
 use yii\base\Widget;
 
 class WordStatusWidget extends Widget
@@ -20,7 +21,7 @@ class WordStatusWidget extends Widget
     public function run()
     {
         $id = $this->id;
-        $token = \Yii::$app->request->getCsrfToken();
+        $token = Yii::$app->request->getCsrfToken();
         echo Toggle::widget([
             'name' => $id,
             'checked' => $this->status,

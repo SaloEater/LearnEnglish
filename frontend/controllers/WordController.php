@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\Response;
 
 class WordController extends Controller
 {
@@ -88,11 +89,12 @@ class WordController extends Controller
             $data = Yii::$app->request->post();
             $id = $data['id'];
             $entity = $this->userswordsService->changeStatus($id);
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            Yii::$app->response->format = Response::FORMAT_JSON;
             return [
                 'known' => $entity->status,
             ];
         }
+        return [];
     }
 
 }

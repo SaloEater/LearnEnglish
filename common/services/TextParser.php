@@ -5,6 +5,10 @@ namespace common\services;
 use common\entities\Sentence;
 use common\entities\Text;
 use common\entities\UsersWords;
+use common\helpers\word\WordHelper;
+use DomainException;
+
+use Yii;
 
 class TextParser
 {
@@ -21,23 +25,31 @@ class TextParser
 
     private $log;
 
-    public function __construct()
+    public function __construct(
+        FormService $formService,
+        TranslationService $translationService,
+        WordService $wordService,
+        FormsWordsService $formswordsService,
+        SentencesWordsService $sentenceswordsService,
+        SentenceService $sentenceService,
+        UsersWordsService $userswordsService
+        )
     {
         $this->wordAPI = new WordAPI();
-        $this->formService = new FormService();
-        $this->translationService = new TranslationService();
-        $this->wordService = new WordService();
-        $this->formswordsService = new FormsWordsService();
-        $this->sentenceswordsService = new SentencesWordsService();
-        $this->sentenceService = new SentenceService();
-        $this->userswordsService = new UsersWordsService();
+        $this->formService = $formService;
+        $this->translationService = $translationService;
+        $this->wordService = $wordService;
+        $this->formswordsService = $formswordsService;
+        $this->sentenceswordsService = $sentenceswordsService;
+        $this->sentenceService = $sentenceService;
+        $this->userswordsService = $userswordsService;
     }
 
     public function parseTextFromModel(Text $model)
     {
         $this->userID = $model->created_by;
         $this->parseText($model->content, $model->id);
-        \Yii::$app->session->setFlash('success', $this->log);
+        Yii::$app->session->setFlash('success', $this->log);
 
     }
 
@@ -46,7 +58,11 @@ class TextParser
         /**
          * @var string[] $sentences
          */
-        preg_match_all('([A-Z]{1}[\w\d\s\-\,\;]+[\.\!]{1})', $text, $sentences);
+        /*
+        TODO Может стоит этот ([A-Z][^\.!?]*[\.!?])
+        TODO Написать свой парсер предложений
+        */
+        preg_match_all('([A-Z][\w\d\s\-\,\;]+[\.\!]{1})', $text, $sentences);
 
         foreach ($sentences[0] as $sentence_content) {
             $this->log .= "Sentence: $sentence_content</br>";
@@ -63,7 +79,10 @@ class TextParser
         /**
          * @var string[] $words
          */
-        preg_match_all('(\w+)', $sentence_content, $words);
+        /*
+        TODO Старая регулярка (\w+)
+        */
+        preg_match_all('~\w+|\p{P}~si', $sentence_content, $words);
         foreach ($words[0] as $form_content) {
             $this->log .= "Form: $form_content</br>";
             $this->parseWord($form_content, $sentence->id);
@@ -72,6 +91,13 @@ class TextParser
 
     public function parseWord(string $form_content, int $sentence_id)
     {
+        if (WordHelper::isPunctuationMark($form_content)) {
+            $word = $this->wordService->getByContent($form_content);
+            $this->sentenceswordsService->EstablishLinkBetween($sentence_id, $word->id);
+            $this->wordService->save($word, false);
+            return;
+        }
+
         if (($dict = $this->wordAPI->IsForm($form_content))) {
             $form = $this->formService->getByContent($form_content);
             $this->formService->save($form);
@@ -95,7 +121,7 @@ class TextParser
                 }
             }
         } else {
-            throw new \DomainException("Can't reach wordAPI server");
+            throw new DomainException("Can't reach wordAPI server");
         }
     }
 

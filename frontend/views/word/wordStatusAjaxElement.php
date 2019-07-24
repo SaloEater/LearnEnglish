@@ -7,12 +7,14 @@
  */
 
 use common\widgets\WordStatusWidget;
+use yii\web\View;
+use yii\widgets\Pjax;
 
 /* @var $id int */
 /* @var $status bool*/
-/* @var $view \yii\web\View */
+/* @var $view View */
 
-\yii\widgets\Pjax::begin([
+Pjax::begin([
     'enablePushState' => false,
     'submitEvent' => 'click'
 ]);
@@ -28,7 +30,7 @@ echo WordStatusWidget::widget([
     'view' => $view
 ]);*/
 
-\yii\widgets\Pjax::end();
+Pjax::end();
 
 ?>
 

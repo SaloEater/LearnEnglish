@@ -44,8 +44,7 @@ class IRepository
     /**
      * @param ActiveRecord $record
      * @param array $condition
-     * @return array(ActiveRecord)
-     * @throws NotFoundException
+     * @return ActiveRecord (ActiveRecord)
      */
     protected function getAll(ActiveRecord $record, array $condition): ActiveRecord
     {

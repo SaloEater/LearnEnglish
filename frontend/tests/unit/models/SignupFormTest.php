@@ -1,16 +1,20 @@
 <?php
 namespace frontend\tests\unit\models;
 
+use Codeception\Test\Unit;
+use common\entities\User;
 use common\fixtures\UserFixture;
 use common\repositories\UserRepository;
 use common\services\AuthService;
 use frontend\forms\SignupForm;
 use frontend\services\auth\SignupService;
+use frontend\tests\UnitTester;
+use Yii;
 
-class SignupFormTest extends \Codeception\Test\Unit
+class SignupFormTest extends Unit
 {
     /**
-     * @var \frontend\tests\UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -34,14 +38,14 @@ class SignupFormTest extends \Codeception\Test\Unit
         ]);
 
         (new SignupService())->signup($form);
-        $user = (new UserRepository())->getByUsername($form->username);
+        $user = Yii::createObject(UserRepository::class)->getByUsername($form->username);
         expect($user)->notNull();
 
-        /** @var \common\entities\User $user */
+        /** @var User $user */
         $user = $this->tester->grabRecord('common\entities\User', [
             'username' => 'some_username',
             'email' => 'some_email@example.com',
-            'status' => \common\entities\User::STATUS_WAIT
+            'status' => User::STATUS_WAIT
         ]);
 
         $this->tester->seeEmailIsSent();
@@ -50,8 +54,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
         expect($mail)->isInstanceOf('yii\mail\MessageInterface');
         expect($mail->getTo())->hasKey('some_email@example.com');
-        expect($mail->getFrom())->hasKey(\Yii::$app->params['supportEmail']);
-        expect($mail->getSubject())->equals('Account registration at ' . \Yii::$app->name);
+        expect($mail->getFrom())->hasKey(Yii::$app->params['supportEmail']);
+        expect($mail->getSubject())->equals('Account registration at ' . Yii::$app->name);
         expect($mail->toString())->contains($user->verification_token);
     }
 
