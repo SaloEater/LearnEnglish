@@ -33,7 +33,7 @@ class TranslatableSentenceWidget extends Widget
         foreach($this->sentence->words as $word) {
             $sentence .= TranslatableWordWidget::widget([
                 'word' => $word
-            ]);
+            ]) . ' ';
         }
 
         return Html::tag('div', $sentence, [

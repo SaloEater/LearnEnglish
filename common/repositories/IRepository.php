@@ -7,27 +7,54 @@ use yii\db\ActiveRecord;
 class IRepository
 {
     /**
-     * @var $type ActiveRecord
+     * @param ActiveRecord $record
+     * @param array $condition
+     * @return ActiveRecord|null
      */
-    protected $type;
-
-    //TODO Доделать find методы
-
-    protected function getBy(ActiveRecord $model, array $condition): ActiveRecord
+    protected function findBy(ActiveRecord $record, array $condition)
     {
-        $object = $model::find()->andWhere($condition)->limit(1)->one();
-        return $this->found($object);
+        return $record::find()->where($condition)->limit(1)->one();
     }
-    protected function found($object)
+
+    /**
+     * @param ActiveRecord $record
+     * @param array $condition
+     * @return ActiveRecord
+     * @throws NotFoundException
+     */
+    protected function getBy(ActiveRecord $record, array $condition): ActiveRecord
     {
-        if (!$object) {
-            throw new NotFoundException(($this->type::className())." is not found");
+        if (!($object = $this->findBy($record, $condition))) {
+            throw new NotFoundException(($record::className())."'s is not found");
         }
+
         return $object;
     }
-    protected function getSome(array $condition): array
+
+    /**
+     * @param ActiveRecord $record
+     * @param array $condition
+     * @return array(ActiveRecord)|null
+     */
+    protected function findAll(ActiveRecord $record, array $condition)
     {
-        $objects = $this->type::find()->andWhere($condition)->all();
-        return $this->found($objects);
+        return $record::find()->where($condition)->all();
     }
+
+    /**
+     * @param ActiveRecord $record
+     * @param array $condition
+     * @return array(ActiveRecord)
+     * @throws NotFoundException
+     */
+    protected function getAll(ActiveRecord $record, array $condition): ActiveRecord
+    {
+        if (!($objects = $this->findAll($record, $condition))) {
+            throw new NotFoundException(($record::className())." is not found");
+        }
+
+        return $objects;
+    }
+
+
 }

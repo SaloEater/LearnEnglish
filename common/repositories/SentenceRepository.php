@@ -8,13 +8,15 @@ use common\entities\Sentence;
 
 class SentenceRepository extends IRepository
 {
-    public function __construct()
+    private $innerRecord;
+
+    public function __construct(Sentence $innerRecord)
     {
-        $this->type = new Sentence();
+        $this->innerRecord = $innerRecord;
     }
 
     public function getById($id) {
-        $sentence = $this->getBy(['id' => $id]);
+        $sentence = $this->getBy($this->innerRecord, ['id' => $id]);
         return $sentence;
     }
 }

@@ -9,14 +9,16 @@ use yii\web\NotFoundHttpException;
 
 class TextRepository extends IRepository
 {
-    public function __construct()
+    private $innerRecord;
+
+    public function __construct(Text $innerRecord)
     {
-        $this->type = new Text();
+        $this->innerRecord = $innerRecord;
     }
 
     public function getById(int $id)
     {
-        $text = $this->getBy(['id' => $id]);
+        $text = $this->getBy($this->innerRecord, ['id' => $id]);
         return $text;
     }
 }

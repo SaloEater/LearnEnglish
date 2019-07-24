@@ -5,9 +5,11 @@ use yii\web\NotFoundHttpException;
 
 class TranslationRepository extends IRepository
 {
-    public function __construct()
+    private $innerRecord;
+
+    public function __construct(Translation $innerRecord)
     {
-        $this->type = new Translation();
+        $this->innerRecord = $innerRecord;
     }
 
     /**
@@ -18,7 +20,7 @@ class TranslationRepository extends IRepository
      */
     public function getByTrAndTypeForWord(string $content, string $type, int $word_id)
     {
-        $form = $this->getBy([
+        $form = $this->getBy($this->innerRecord, [
             'content' => $content,
             'type' => $type,
             'word_id' => $word_id

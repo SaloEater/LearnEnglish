@@ -12,9 +12,11 @@ use common\entities\User;
 
 class UserRepository extends IRepository
 {
-    public function __construct()
+    private $innerRecord;
+
+    public function __construct(User $innerRecord)
     {
-        $this->type = new User();
+        $this->innerRecord = $innerRecord;
     }
 
     public function save(User $user)
@@ -31,7 +33,7 @@ class UserRepository extends IRepository
 
     public function getByVerificationToken($token)
     {
-        if (!($user = $this->getBy(['verification_token' => $token]))) {
+        if (!($user = $this->getBy($this->innerRecord, ['verification_token' => $token]))) {
             throw new NotFoundException('User not found');
         }
         return $user;
@@ -39,7 +41,7 @@ class UserRepository extends IRepository
 
     public function getByEmail($email)
     {
-        $user = $this->getBy(['email' => $email]);
+        $user = $this->getBy($this->innerRecord, ['email' => $email]);
         return $user;
     }
 
@@ -50,13 +52,13 @@ class UserRepository extends IRepository
 
     public function getByPasswordToken($token)
     {
-        $user = $this->getBy(['password_reset_token' => $token]);
+        $user = $this->getBy($this->innerRecord, ['password_reset_token' => $token]);
         return $user;
     }
 
     public function getByUsername($username)
     {
-        $user = $this->getBy(['username' => $username]);
+        $user = $this->getBy($this->innerRecord, ['username' => $username]);
         return $user;
     }
 }

@@ -9,9 +9,11 @@ use yii\web\NotFoundHttpException;
 
 class FormsWordsRepository extends IRepository
 {
-    public function __construct()
+    private $innerRecord;
+
+    public function __construct(FormsWords $innerRecord)
     {
-        $this->type = new FormsWords();
+        $this->innerRecord = $innerRecord;
     }
 
     /**
@@ -22,7 +24,7 @@ class FormsWordsRepository extends IRepository
      */
     public function getByIDs(int $form_id, int $word_id)
     {
-        $fw = $this->getBy([
+        $fw = $this->getBy($this->innerRecord, [
             'form_id' => $form_id,
             'word_id' => $word_id
         ]);

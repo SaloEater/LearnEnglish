@@ -3,13 +3,16 @@
 namespace common\repositories;
 
 use common\entities\Form;
+use common\entities\FormsWords;
 use yii\web\NotFoundHttpException;
 
 class FormRepository extends IRepository
 {
-    public function __construct()
+    private $innerRecord;
+
+    public function __construct(Form $innerRecord)
     {
-        $this->type = new Form();
+        $this->innerRecord = $innerRecord;
     }
 
     /**
@@ -19,7 +22,7 @@ class FormRepository extends IRepository
      */
     public function getByContent(string $content)
     {
-        $form = $this->getBy([
+        $form = $this->getBy($this->innerRecord, [
             'content' => $content
         ]);
 

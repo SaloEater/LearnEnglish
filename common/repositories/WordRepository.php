@@ -6,14 +6,16 @@ use yii\web\NotFoundHttpException;
 
 class WordRepository extends IRepository
 {
-    public function __construct()
+    private $innerRecord;
+
+    public function __construct(Word $innerRecord)
     {
-        $this->type = new Word();
+        $this->innerRecord = $innerRecord;
     }
 
     public function getById($id)
     {
-        $word = $this->getBy(['id' => $id]);
+        $word = $this->getBy($this->innerRecord, ['id' => $id]);
 
         return $word;
     }
@@ -25,7 +27,7 @@ class WordRepository extends IRepository
      */
     public function getByContent(string $content)
     {
-        $word = $this->getBy([
+        $word = $this->getBy($this->innerRecord, [
             'content' => $content
         ]);
 
