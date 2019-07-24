@@ -11,6 +11,13 @@ class WordRepository extends IRepository
         $this->type = new Word();
     }
 
+    public function getById($id)
+    {
+        $word = $this->getBy(['id' => $id]);
+
+        return $word;
+    }
+
     /**
      * @param string $content
      * @return \yii\db\ActiveRecord

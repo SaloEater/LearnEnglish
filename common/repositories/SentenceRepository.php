@@ -12,4 +12,9 @@ class SentenceRepository extends IRepository
     {
         $this->type = new Sentence();
     }
+
+    public function getById($id) {
+        $sentence = $this->getBy(['id' => $id]);
+        return $sentence;
+    }
 }
